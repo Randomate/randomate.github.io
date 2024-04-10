@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/img/fav.png">
-    <meta name='revised' content='2024-04-10T16:26:31-05:00'>
-    <meta name='search_date' content='2024-04-10T16:26:31-05:00'>
-    <meta name='date' content='2024-04-10T16:26:31-05:00'>
-    <meta name="date.updated" content="2024-04-10T16:26:31-05:00; 2024-04-10T16:26:31-05:00">
-    <link rel="stylesheet" href="/assets/css/styles.css?1712784391">
+    <meta name='revised' content='2024-04-10T17:01:42-05:00'>
+    <meta name='search_date' content='2024-04-10T17:01:42-05:00'>
+    <meta name='date' content='2024-04-10T17:01:42-05:00'>
+    <meta name="date.updated" content="2024-04-10T17:01:42-05:00; 2024-04-10T17:01:42-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1712786502">
 <title>Randomate Blog - Commands Collection</title>
   </head>
   <body>
@@ -50,6 +50,32 @@ r.svg
 <span class="nv">$ </span>zbarimg <span class="nt">-q</span> /tmp/qr.svg | <span class="nb">cut</span> <span class="nt">-c</span> 9- | <span class="nb">base64</span> <span class="nt">-d</span>
 </code></pre></div></div>
 <hr />
+<p>Generate Duplex PDF from Single Page Scan:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Change order of even pages</span>
+<span class="nv">$ </span>/usr/bin/pdftk EvenPages.pdf <span class="nb">cat </span>end-1 output BackWardsEvenPages.pdf
+
+<span class="c"># Merge even and odd pages</span>
+<span class="nv">$ </span>/usr/bin/pdftk <span class="nv">ODD</span><span class="o">=</span>OddPages.pdf <span class="nv">EVEN</span><span class="o">=</span>backWardsEvenPages.pdf shuffle ODD EVEN output FinalDocument.pdf
+
+<span class="c"># Remove last blank page, if necessary</span>
+<span class="nv">$ </span>/usr/bin/pdftk FinalDocument.pdf <span class="nb">cat </span>1-r2 output FinalDocumentWithoutLast.pdf
+</code></pre></div></div>
+<hr />
+<p>Rename Media Files to Create Date:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>exiftool <span class="nt">-d</span> <span class="s1">'%Y-%m-%d_%H%M%S.%%e'</span> <span class="s1">'-filename&lt;CreateDate'</span> <span class="nt">-v</span> 1 <span class="k">*</span>
+</code></pre></div></div>
+<hr />
+<p>Remove DRM from PDF:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Login to Adobe DRM</span>
+<span class="nv">$ </span>adept_activate <span class="nt">--username</span> ADOBE_LOGIN_USERNAME <span class="nt">--password</span> ADOBE_LOGIN_PASSWORD
+
+<span class="c"># Download PDF from ASCM File</span>
+<span class="nv">$ </span>acsmdownloader <span class="nt">--acsm-file</span> FILE.ascm <span class="nt">--output-file</span> TMPOUT
+
+<span class="c"># Remove DRM</span>
+<span class="nv">$ </span>adept_remove TMPOUT
+</code></pre></div></div>
+<hr />
 
 
                 <div class="tags">
@@ -80,6 +106,6 @@ r.svg
         </div>
 </div>
   </div>
-  <div id="footer">Randomate Blog | v. 1.5.0 | 1712784391</div>
+  <div id="footer">Randomate Blog | v. 1.5.0 | 1712786502</div>
   </body>
 </html>
