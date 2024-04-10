@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/img/fav.png">
+    <meta name='revised' content='2024-04-10T16:23:26-05:00'>
+    <meta name='search_date' content='2024-04-10T16:23:26-05:00'>
+    <meta name='date' content='2024-04-10T16:23:26-05:00'>
+    <meta name="date.updated" content="2024-04-10T16:23:26-05:00; 2024-04-10T16:23:26-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1712784206">
+<title>Randomate Blog - Commands Collection</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav nav-pills">
+  
+    <a href="/" class="nav-link">Home</a>
+  
+    <a href="/tags/" class="nav-link">Tags</a>
+  
+    <a href="/imprint/" class="nav-link">Imprint</a>
+  
+</nav>
+
+      <div class="post">
+        <div class="post-frame">
+        <h1 class="title">Commands Collection</h1>
+        <p class="date">09. April 2024</p>
+                <p>Collection of helpful Linux commands.</p>
+
+<hr />
+
+<p>List File With Leading Line Numbers:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">nl</span> <span class="nt">-w2</span> <span class="nt">-s</span><span class="s2">"| "</span> testfile.txt
+ 1| This is a <span class="nb">test </span>file
+ 2| with line break.
+</code></pre></div></div>
+<hr />
+<p>Fast Search:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fd searchString
+</code></pre></div></div>
+<hr />
+<p>Generate and Read QR Codes:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Generate</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"some data"</span> | <span class="nb">base64</span> <span class="nt">-w</span> 0 | qrencode <span class="nt">-l</span> Q <span class="nt">-t</span> SVG <span class="nt">-o</span> /tmp/q
+r.svg
+
+<span class="c"># Read</span>
+<span class="nv">$ </span>zbarimg <span class="nt">-q</span> /tmp/qr.svg | <span class="nb">cut</span> <span class="nt">-c</span> 9- | <span class="nb">base64</span> <span class="nt">-d</span>
+</code></pre></div></div>
+<hr />
+
+
+                <div class="tags">
+                        Tags:
+                        
+                        <span class="tag">
+                                <a href="/tags/##en">#EN</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##linux">#linux</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##bash">#bash</a>
+                        </span>
+                        
+                </div>
+        </div>
+
+        <div class="pagenavigation">
+                
+                <a class="prev" href="/2024-04-08/Firefox-and-SelfCA.html">&laquo; Firefox And SelfCA</a>
+                
+                
+                <span class="next">No next post</span>
+                
+        </div>
+</div>
+  </div>
+  <div id="footer">Randomate Blog | v. 1.5.0 | 1712784206</div>
+  </body>
+</html>
