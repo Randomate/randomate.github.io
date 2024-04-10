@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/img/fav.png">
+    <meta name='revised' content='2024-04-10T12:58:06-05:00'>
+    <meta name='search_date' content='2024-04-10T12:58:06-05:00'>
+    <meta name='date' content='2024-04-10T12:58:06-05:00'>
+    <meta name="date.updated" content="2024-04-10T12:58:06-05:00; 2024-04-10T12:58:06-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1712771886">
+<title>Randomate Blog - Zfs Clone Snapshots</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav nav-pills">
+  
+    <a href="/" class="nav-link">Home</a>
+  
+    <a href="/tags/" class="nav-link">Tags</a>
+  
+    <a href="/imprint/" class="nav-link">Imprint</a>
+  
+</nav>
+
+      <div class="post">
+        <div class="post-frame">
+        <h1 class="title">Zfs Clone Snapshots</h1>
+        <p class="date">20. April 2023</p>
+                <p>The following script clones a zfs dataset with all available snapshots. The variable <code class="language-plaintext highlighter-rouge">source=${1}</code> defines the source dataset, <code class="language-plaintext highlighter-rouge">dest=${2}</code> defines the destination dataset. The destination dataset must be created in advanced manually.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1| <span class="c">#!/bin/bash</span>
+ 2| 
+ 3| <span class="nb">source</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="k">}</span>
+ 4| <span class="nv">source_mountpoint</span><span class="o">=</span><span class="si">$(</span>/usr/sbin/zfs get mountpoint <span class="nt">-o</span> value <span class="nt">-H</span> <span class="k">${</span><span class="nv">source</span><span class="k">}</span><span class="si">)</span>
+ 5| <span class="nv">source_snappath</span><span class="o">=</span><span class="k">${</span><span class="nv">source_mountpoint</span><span class="k">}</span>/.zfs/snapshot
+ 6| <span class="nv">dest</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">}</span>
+ 7| <span class="nv">dest_mountpoint</span><span class="o">=</span><span class="si">$(</span>/usr/sbin/zfs get mountpoint <span class="nt">-o</span> value <span class="nt">-H</span> <span class="k">${</span><span class="nv">dest</span><span class="k">}</span><span class="si">)</span>
+ 8| 
+ 9| <span class="nv">snaps</span><span class="o">=(</span><span class="k">${</span><span class="nv">source_snappath</span><span class="k">}</span>/<span class="k">*</span><span class="o">)</span>
+10| 
+11| <span class="nv">IFS</span><span class="o">=</span><span class="s1">$'</span><span class="se">\n</span><span class="s1">'</span> <span class="nv">snaps</span><span class="o">=(</span><span class="si">$(</span><span class="nb">sort</span> <span class="o">&lt;&lt;&lt;</span><span class="s2">"</span><span class="k">${</span><span class="nv">snaps</span><span class="p">[*]</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span><span class="o">)</span>
+12| <span class="nb">unset </span>IFS
+13| 
+14| <span class="k">for </span>f <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">snaps</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="k">do
+</span>15|    <span class="nb">echo</span> <span class="s2">"Copy </span><span class="nv">$f</span><span class="s2">"</span>
+16|    <span class="nv">snapname</span><span class="o">=</span><span class="si">$(</span><span class="nb">basename</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span><span class="si">)</span>
+17|    /usr/bin/rsync <span class="nt">-a</span> <span class="nt">--progress</span> <span class="nt">--delete</span> <span class="k">${</span><span class="nv">f</span><span class="k">}</span>/ <span class="k">${</span><span class="nv">dest_mountpoint</span><span class="k">}</span>
+18|    /usr/sbin/zfs snapshot <span class="k">${</span><span class="nv">dest</span><span class="k">}</span>@<span class="k">${</span><span class="nv">snapname</span><span class="k">}</span>
+19|    <span class="nb">echo</span> <span class="s2">"-------------------------------------------------"</span>
+20| <span class="k">done</span>
+</code></pre></div></div>
+
+
+                <div class="tags">
+                        Tags:
+                        
+                        <span class="tag">
+                                <a href="/tags/##zfs">#zfs</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##openzfs">#openzfs</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##bash">#bash</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##clone">#clone</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##en">#EN</a>
+                        </span>
+                        
+                </div>
+        </div>
+
+        <div class="pagenavigation">
+                
+                <a class="prev" href="/2023-04-08/Getreidesorten.html">&laquo; Getreidesorten</a>
+                
+                
+                <a class="next" href="/2023-05-02/Backup-to-AWS-S3-Deep-Archive.html">Backup To Aws S3 Deep Archive &raquo;</a>
+                
+        </div>
+</div>
+  </div>
+  <div id="footer">Randomate Blog | v. 1.5.0 | 1712771886</div>
+  </body>
+</html>

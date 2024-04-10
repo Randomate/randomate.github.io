@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/img/fav.png">
+    <meta name='revised' content='2024-04-10T12:58:06-05:00'>
+    <meta name='search_date' content='2024-04-10T12:58:06-05:00'>
+    <meta name='date' content='2024-04-10T12:58:06-05:00'>
+    <meta name="date.updated" content="2024-04-10T12:58:06-05:00; 2024-04-10T12:58:06-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1712771886">
+<title>Randomate Blog - Delete Old Zfs Snapshots</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav nav-pills">
+  
+    <a href="/" class="nav-link">Home</a>
+  
+    <a href="/tags/" class="nav-link">Tags</a>
+  
+    <a href="/imprint/" class="nav-link">Imprint</a>
+  
+</nav>
+
+      <div class="post">
+        <div class="post-frame">
+        <h1 class="title">Delete Old Zfs Snapshots</h1>
+        <p class="date">01. February 2023</p>
+                <p>The script generates a list of existing snapshots, which should be removed from a dataset. For every month <code class="language-plaintext highlighter-rouge">DELCOUNT = 3</code> snapshots are preserved for deleting. The snapshots from the current month are also protected. The snapshots needs to be in the following string format: <code class="language-plaintext highlighter-rouge">pool/dataset@%Y-%m-%d_%H%M</code>, for example <code class="language-plaintext highlighter-rouge">storage/documents@2023-04-24_0625</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># deleteOldZFSSnapshots.py</span>
+
+ 1| import libs.mockdata as md
+ 2| import libs.datemagic as dm
+ 3| import libs.zfsmagic as zm
+ 4| import subprocess
+ 5| import datetime
+ 6| import sys
+ 7| 
+ 8| <span class="c"># dummydates = md.mockDates</span>
+ 9| 
+10| DATASET <span class="o">=</span> sys.argv[1]
+11| 
+12| DATENOW <span class="o">=</span> datetime.datetime.now<span class="o">()</span>
+13| DELCOUNT <span class="o">=</span> 3
+14| 
+15| result <span class="o">=</span> subprocess.run<span class="o">([</span><span class="s2">"zfs"</span>, <span class="s2">"list"</span>, <span class="s2">"-t"</span>, <span class="s2">"snapshot"</span>, <span class="s2">"-o"</span>, <span class="s2">"name"</span>, DATASET], <span class="nv">capture_output</span><span class="o">=</span>True<span class="o">)</span>
+16| <span class="c">#print(result.stdout.splitlines()[2].decode("utf-8"))</span>
+17| snapshotentries <span class="o">=</span> result.stdout.splitlines<span class="o">()</span>
+18| print<span class="o">(</span><span class="s2">"Found snapshotentries:"</span>, len<span class="o">(</span>snapshotentries<span class="o">))</span>
+19| zfsdict <span class="o">=</span> dm.sortDates<span class="o">(</span>zm.snapOutToDict<span class="o">(</span>snapshotentries<span class="o">))</span>
+20| print<span class="o">(</span><span class="s2">"Found zfsdict        :"</span>, dm.countsnaps<span class="o">(</span>zfsdict<span class="o">))</span>
+21| delSmaps <span class="o">=</span> zm.removeProtectedSnaps<span class="o">(</span>zfsdict, DATENOW, DELCOUNT<span class="o">)</span>
+22| print<span class="o">(</span><span class="s2">"Size cleanup         :"</span>, dm.countsnaps<span class="o">(</span>delSmaps<span class="o">))</span>
+23| 
+24| dm.pSnapsAsLine<span class="o">(</span><span class="s2">"zfs destroy"</span>, zfsdict<span class="o">)</span>
+25| <span class="c">#dm.ppDates(zfsdict)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># libs/datemagic.py</span>
+
+ 1| def sortDates<span class="o">(</span>inDict<span class="o">)</span>:
+ 2|     inDict <span class="o">=</span> dict<span class="o">(</span>sorted<span class="o">(</span>inDict.items<span class="o">()))</span>
+ 3| 
+ 4|     <span class="k">for </span>year, months <span class="k">in </span>inDict.items<span class="o">()</span>:
+ 5|         <span class="c"># print("Year:", year)</span>
+ 6|         months <span class="o">=</span> dict<span class="o">(</span>sorted<span class="o">(</span>months.items<span class="o">()))</span>
+ 7|         inDict[year] <span class="o">=</span> months
+ 8| 
+ 9|         <span class="k">for </span>month, days <span class="k">in </span>months.items<span class="o">()</span>:
+10|             <span class="c"># print("Month:", month)</span>
+11|             days <span class="o">=</span> dict<span class="o">(</span>sorted<span class="o">(</span>days.items<span class="o">()))</span>
+12|             inDict[year][month] <span class="o">=</span> days
+13| 
+14|     <span class="k">return </span>inDict
+15| 
+16| def countsnaps<span class="o">(</span>inDict<span class="o">)</span>:
+17|     count <span class="o">=</span> 0
+18|     <span class="k">for </span>year, months <span class="k">in </span>inDict.items<span class="o">()</span>:
+19|         <span class="k">for </span>month, days <span class="k">in </span>months.items<span class="o">()</span>:
+20|             <span class="k">for </span>day, daystring <span class="k">in </span>days.items<span class="o">()</span>:
+21|                 count <span class="o">=</span> count + 1
+22| 
+23|     <span class="k">return </span>count
+24| 
+25| def ppDates<span class="o">(</span>inDict<span class="o">)</span>:
+26|     ycount <span class="o">=</span> 0
+27|     mcount <span class="o">=</span> 0
+28|     dcount <span class="o">=</span> 0
+29|     <span class="k">for </span>year, months <span class="k">in </span>inDict.items<span class="o">()</span>:
+30|         ycount <span class="o">=</span> ycount + 1
+31|         mcount <span class="o">=</span> 0
+32|         print<span class="o">(</span><span class="s2">""</span>, year<span class="o">)</span>
+33|         <span class="k">for </span>month, days <span class="k">in </span>months.items<span class="o">()</span>:
+34|             mcount <span class="o">=</span> mcount + 1
+35|             dcount <span class="o">=</span> 0
+36|             print<span class="o">(</span><span class="s2">"  "</span>, month<span class="o">)</span>
+37|             <span class="k">for </span>day, daystring <span class="k">in </span>days.items<span class="o">()</span>:
+38|                 dcount <span class="o">=</span> dcount + 1
+39|                 print<span class="o">(</span><span class="s2">"  "</span>, <span class="s2">"  "</span>, year, month, day,<span class="s2">":"</span>,daystring<span class="o">)</span>
+40|             print<span class="o">(</span><span class="s2">"  "</span>, <span class="s2">"  "</span>, <span class="s2">"Days:"</span>, dcount, <span class="s2">"for"</span>, month, year, <span class="s2">""</span><span class="o">)</span>
+41|         print<span class="o">(</span><span class="s2">"  "</span>, <span class="s2">"Months:"</span>, mcount, <span class="s2">"for"</span>, year, <span class="s2">""</span><span class="o">)</span>
+42|     print<span class="o">(</span><span class="s2">"Years:"</span>, ycount, <span class="s2">""</span><span class="o">)</span>
+43| 
+44| def pSnapsAsLine<span class="o">(</span>precommand: str, inDict: <span class="o">{})</span>:
+45|     <span class="k">for </span>year, months <span class="k">in </span>inDict.items<span class="o">()</span>:
+46|         <span class="k">for </span>month, days <span class="k">in </span>months.items<span class="o">()</span>:
+47|             <span class="k">for </span>day, daystring <span class="k">in </span>days.items<span class="o">()</span>:
+48|                 print<span class="o">(</span>precommand, daystring<span class="o">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># libs/zfsmagic.py</span>
+
+ 1| import datetime
+ 2| import libs.datemagic as dm
+ 3| import random
+ 4| 
+ 5| 
+ 6| def snapOutToDict<span class="o">(</span>strin<span class="o">)</span>:
+ 7|     returnDict <span class="o">=</span> <span class="o">{}</span>
+ 8|     <span class="c">#print(type(returnDict), returnDict)</span>
+ 9|     <span class="c">#print(type(strin))</span>
+10|     <span class="k">for </span>k <span class="k">in </span>strin[1:]:
+11|         l <span class="o">=</span> k.decode<span class="o">(</span><span class="s2">"UTF-8"</span><span class="o">)</span>.split<span class="o">(</span><span class="s2">"@"</span><span class="o">)</span>
+12|         <span class="c">#print(k, l[0], l[1])</span>
+13|         datetime <span class="o">=</span> l[1].split<span class="o">(</span><span class="s2">"_"</span><span class="o">)</span>
+14|         <span class="nb">date</span> <span class="o">=</span> datetime[0].split<span class="o">(</span><span class="s2">"-"</span><span class="o">)</span>
+15|         <span class="c">#print(date[0], date[1], date[2], k.decode("UTF-8"))</span>
+16|         datedict <span class="o">=</span> <span class="o">{</span><span class="nb">date</span><span class="o">[</span>2]: k.decode<span class="o">(</span><span class="s2">"UTF-8"</span><span class="o">)}</span>
+17| 
+18| 
+19|         itm <span class="o">=</span> <span class="o">{</span><span class="nb">date</span><span class="o">[</span>0]: <span class="o">{</span><span class="nb">date</span><span class="o">[</span>1]: <span class="o">{</span><span class="nb">date</span><span class="o">[</span>2]: k.decode<span class="o">(</span><span class="s2">"UTF-8"</span><span class="o">)}}}</span>
+20|         returnDict <span class="o">=</span> addItemToDict<span class="o">(</span>returnDict, itm<span class="o">)</span>
+21| 
+22|     <span class="k">return </span>returnDict
+23| 
+24| def addItemToDict<span class="o">(</span>inDict: <span class="o">{}</span>, item: <span class="o">{})</span>:
+25|     year <span class="o">=</span> list<span class="o">(</span>item<span class="o">)[</span>0]
+26|     month <span class="o">=</span> list<span class="o">(</span>item[year]<span class="o">)[</span>0]
+27|     day <span class="o">=</span> list<span class="o">(</span>item[year][month]<span class="o">)[</span>0]
+28|     daystr <span class="o">=</span> item[year][month][day]
+29| 
+30|     <span class="k">if </span>year not <span class="k">in </span>inDict:
+31|         inDict[year] <span class="o">=</span> <span class="o">{}</span>
+32|     <span class="k">if </span>month not <span class="k">in </span>inDict[year]:
+33|         inDict[year][month] <span class="o">=</span> <span class="o">{}</span>
+34|     <span class="k">if </span>day not <span class="k">in </span>inDict[year][month]:
+35|         inDict[year][month][day] <span class="o">=</span> <span class="o">{}</span>
+36| 
+37|     inDict[year][month][day] <span class="o">=</span> daystr
+38| 
+39|     <span class="k">return </span>inDict
+40| 
+41| def removeProtectedSnaps<span class="o">(</span>dictin: <span class="o">{}</span>, today: datetime.date, count: int<span class="o">)</span>:
+42|     monthstring <span class="o">=</span> str<span class="o">(</span>f<span class="s2">"{today.month:02d}"</span><span class="o">)</span>
+43|     yearstring <span class="o">=</span> str<span class="o">(</span>today.year<span class="o">)</span>
+44|     try:
+45|         del dictin[yearstring][monthstring]
+46|     except KeyError:
+47|         print<span class="o">(</span><span class="s2">"Not in Dictionary:"</span>, yearstring, monthstring<span class="o">)</span>
+48| 
+49|     <span class="k">for </span>y <span class="k">in </span>dictin:
+50|         <span class="k">for </span>m <span class="k">in </span>dictin[y]:
+51|             <span class="c">#print(dictin[y][m])</span>
+52|             dictin[y][m] <span class="o">=</span> randomDelMonth<span class="o">(</span>dictin[y][m], count<span class="o">)</span>
+53| 
+54|     <span class="k">return </span>dictin
+55| 
+56| def randomDelMonth<span class="o">(</span>dictin: <span class="o">{}</span>, count: int<span class="o">)</span>:
+57|     lenmonth <span class="o">=</span> len<span class="o">(</span>dictin<span class="o">)</span>
+58| 
+59|     <span class="c">#print(lenmonth, count)</span>
+60|     <span class="k">if </span>lenmonth &lt;<span class="o">=</span> count:
+61|         <span class="k">return</span> <span class="o">{}</span>
+62| 
+63|     <span class="k">for </span>i <span class="k">in </span>range<span class="o">(</span>count<span class="o">)</span>:
+64|         rndindex <span class="o">=</span> random.randint<span class="o">(</span>0, lenmonth - 1 - i<span class="o">)</span>
+65|         tmpkey <span class="o">=</span> list<span class="o">(</span>dictin.keys<span class="o">())[</span>rndindex]
+66|         del dictin[tmpkey]
+67| 
+68|     <span class="k">return </span>dictin
+</code></pre></div></div>
+
+<p><br /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># libs/mockdata.py</span>
+
+ 1| mockDates <span class="o">=</span> <span class="o">{</span>
+ 2|     <span class="s2">"2020"</span>: <span class="o">{</span>
+ 3|         <span class="s2">"05"</span>: <span class="o">{</span>
+ 4|             <span class="s2">"02"</span>: <span class="s2">"2022-05-02"</span>,
+ 5|             <span class="s2">"01"</span>: <span class="s2">"2022-05-01"</span>
+ 6|             <span class="o">}</span>,
+ 7|         <span class="s2">"03"</span>: <span class="o">{</span>
+ 8|             <span class="s2">"06"</span>: <span class="s2">"2022-03-06"</span>,
+ 9|             <span class="s2">"02"</span>: <span class="s2">"2022-03-02"</span>
+10|             <span class="o">}</span>,
+11|     <span class="o">}</span>,
+12|     <span class="s2">"1990"</span>: <span class="o">{</span>
+13|         <span class="s2">"06"</span>: <span class="o">{</span>
+14|             <span class="s2">"02"</span>: <span class="s2">"1999-06-02"</span>,
+15|             <span class="s2">"01"</span>: <span class="s2">"1999-06-01"</span>
+16|             <span class="o">}</span>,
+17|         <span class="s2">"02"</span>: <span class="o">{</span>
+18|             <span class="s2">"06"</span>: <span class="s2">"1999-02-06"</span>,
+19|             <span class="s2">"02"</span>: <span class="s2">"1999-02-02"</span>
+20|             <span class="o">}</span>,
+21|     <span class="o">}</span>
+22| <span class="o">}</span>
+</code></pre></div></div>
+
+
+                <div class="tags">
+                        Tags:
+                        
+                        <span class="tag">
+                                <a href="/tags/##zfs">#zfs</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##openzfs">#openzfs</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##python3">#python3</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##prune">#prune</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##en">#EN</a>
+                        </span>
+                        
+                </div>
+        </div>
+
+        <div class="pagenavigation">
+                
+                <span class="prev">No previous post</span>
+                
+                
+                <a class="next" href="/2023-03-29/OpenZFS-with-HSM-encryption.html">Openzfs With Hsm Encryption &raquo;</a>
+                
+        </div>
+</div>
+  </div>
+  <div id="footer">Randomate Blog | v. 1.5.0 | 1712771886</div>
+  </body>
+</html>

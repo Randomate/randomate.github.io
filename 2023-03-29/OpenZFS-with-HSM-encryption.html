@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/img/fav.png">
+    <meta name='revised' content='2024-04-10T12:58:06-05:00'>
+    <meta name='search_date' content='2024-04-10T12:58:06-05:00'>
+    <meta name='date' content='2024-04-10T12:58:06-05:00'>
+    <meta name="date.updated" content="2024-04-10T12:58:06-05:00; 2024-04-10T12:58:06-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1712771886">
+<title>Randomate Blog - Openzfs With Hsm Encryption</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav nav-pills">
+  
+    <a href="/" class="nav-link">Home</a>
+  
+    <a href="/tags/" class="nav-link">Tags</a>
+  
+    <a href="/imprint/" class="nav-link">Imprint</a>
+  
+</nav>
+
+      <div class="post">
+        <div class="post-frame">
+        <h1 class="title">Openzfs With Hsm Encryption</h1>
+        <p class="date">29. March 2023</p>
+                <p>OpenZFS supports <a href="https://openzfs.org/wiki/Features#Native_data_and_metadata_encryption_for_zfs">native encryption</a> for zfs filesystems. As passphrase a raw byte stream can be used. So it is possible to combine <em>ZFS native encryption</em> with a <em>HSM</em>.</p>
+
+<p>The passphrase is a result of the <a href="https://www.openssl.org/docs/manmaster/man1/openssl-pkeyutl.html">key derivation function (KDF) from openssl</a> for <em>elliptic curves</em>. Therefor a <em>private key</em> and a <em>public key</em> is necessary. The <em>KDF</em> returns an 32 Bit value, which can be used as <em>raw</em> passphrase for the ZFS encrpytion.</p>
+
+<p>In this example the elliptic curve <code class="language-plaintext highlighter-rouge">prime256v1</code> (aka <code class="language-plaintext highlighter-rouge">NIST P-256</code>, <code class="language-plaintext highlighter-rouge">secp256r1</code>) is used.</p>
+
+<h1 id="initiate-the-hardware">Initiate the Hardware</h1>
+<p>For the setup, a <a href="https://www.nitrokey.com/#comparison">Nitrokey HSM 2</a> is used (in the following only <em>HSM</em> called). The first action is to initialise the <em>HSM</em>. The <a href="https://docs.nitrokey.com/hsm/index.html">vendor suggests</a> <code class="language-plaintext highlighter-rouge">3537363231383830</code> as SO-PIN and <code class="language-plaintext highlighter-rouge">648219</code> as User-PIN. I also recommend the tutorial from <a href="https://raymii.org/s/articles/Get_Started_With_The_Nitrokey_HSM.html">raymii</a> if you want to dive deeper into the setup of <em>HSM</em>.</p>
+
+<p>Initialise the <em>HSM</em> with default pins:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>sc-hsm-tool <span class="nt">--initialize</span> <span class="nt">--so-pin</span> 3537363231383830 <span class="nt">--pin</span> 648219 <span class="nt">--label</span> <span class="s2">"ZFS Crypto"</span>
+</code></pre></div></div>
+
+<p>The next step is to generate the master key. The label helps to identify the key, but there is no specified schema:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pkcs11-tool <span class="nt">--login</span> <span class="nt">--pin</span> 648219 <span class="nt">--keypairgen</span> <span class="nt">--key-type</span> EC:prime256v1 <span class="nt">--label</span> <span class="s2">"keyname:zfs-master"</span>
+</code></pre></div></div>
+<p>As output something similar should be printed on the screen. In this example the key has the id <code class="language-plaintext highlighter-rouge">f2a69ae949e5e3f51886e31aa81a7c433269b167</code></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Using slot 0 with a present token <span class="o">(</span>0x0<span class="o">)</span>
+Key pair generated:
+Private Key Object<span class="p">;</span> EC
+  label:      keyname:zfs-master
+  ID:         f2a69ae949e5e3f51886e31aa81a7c433269b167
+  Usage:      sign, derive
+  Access:     none
+Public Key Object<span class="p">;</span> EC  EC_POINT 256 bits
+  EC_POINT:   044104b53ad19a56c2557d8f83d4e82e88828dcf14aeb947e1f184aefe4badd42f15cf3b62a25602d2c696fa6b1a2ceced362085dff898027056dee3b2ed4a80e8970b
+  EC_PARAMS:  06082a8648ce3d030107
+  label:      keyname:zfs-master
+  ID:         f2a69ae949e5e3f51886e31aa81a7c433269b167
+  Usage:      verify, derive
+  Access:     none
+</code></pre></div></div>
+
+<p>As described, two keys are necessary to derive the passphrase. The recommendation is to use the <em>master key</em> (keyname:zfs-master) and a separate key for every <em>ZFS filesystem</em>. So the next step is to generate a second key:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pkcs11-tool <span class="nt">--login</span> <span class="nt">--pin</span> 648219 <span class="nt">--keypairgen</span> <span class="nt">--key-type</span> EC:prime256v1 <span class="nt">--label</span> <span class="s2">"keyname:zfs-crypt-storage-1"</span>
+</code></pre></div></div>
+<p>As output something similar should be printed on the screen. In this example the key has the id <code class="language-plaintext highlighter-rouge">f8a2537ed2d484ad18325c051a17ef04d36f8c5d</code>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Using slot 0 with a present token <span class="o">(</span>0x0<span class="o">)</span>
+Key pair generated:
+Private Key Object<span class="p">;</span> EC
+  label:      keyname:zfs-crypt-storage-1
+  ID:         f8a2537ed2d484ad18325c051a17ef04d36f8c5d
+  Usage:      sign, derive
+  Access:     none
+Public Key Object<span class="p">;</span> EC  EC_POINT 256 bits
+  EC_POINT:   0441042f6a00018cabca1162ef73011cf5a8358951a71b15b00c88cf223e87669075ec7fe10f14c5d28900ae66f3c6e0a41e3ba6b7cd7b0dba3c18f7af2ddf89e971c7
+  EC_PARAMS:  06082a8648ce3d030107
+  label:      keyname:zfs-crypt-storage-1
+  ID:         f8a2537ed2d484ad18325c051a17ef04d36f8c5d
+  Usage:      verify, derive
+  Access:     none
+
+</code></pre></div></div>
+<p>To use the <em>KDF</em>, a <em>private key</em> (in this example <em>keyname:zfs-master</em>) and a <em>public key</em> (in this example <em>keyname:zfs-crypt-storage-1</em>) is necessary. The <em>private key</em> can be exported to the filesystem and stored beside the encrpyted <em>ZFS filesystem</em>. After exporting the <em>public key keyname:zfs-crypt-storage-1</em>, its <em>private key</em> can be deleted. Keep in mind, that also the <em>public key</em> will be deleted. So exporting should be the first step!</p>
+
+<p>Export the <em>public key keyname:zfs-crypt-storage-1</em> <code class="language-plaintext highlighter-rouge">(f8a2537ed2d484ad18325c051a17ef04d36f8c5d)</code> and convert the key into <em>PEM</em> format:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pkcs11-tool <span class="se">\</span>
+    <span class="nt">--read-object</span> <span class="se">\</span>
+    <span class="nt">--type</span> pubkey <span class="se">\</span>
+    <span class="nt">--id</span> f8a2537ed2d484ad18325c051a17ef04d36f8c5d | <span class="se">\</span>
+    openssl ec <span class="nt">-pubin</span> <span class="nt">-inform</span> DER <span class="nt">-outform</span> PEM <span class="nt">-pubout</span> <span class="se">\</span>
+    <span class="nt">-out</span> zfs-crypt-storage-1.pub.pem
+</code></pre></div></div>
+
+<p>As output something similar should be printed on the screen:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat </span>zfs-crypt-storage-1.pub.pem 
+<span class="nt">-----BEGIN</span> PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEL2oAAYyryhFi73MBHPWoNYlRpxsV
+sAyIzyI+h2aQdex/4Q8UxdKJAK5m88bgpB47prfNew26PBj3ry3fielxxw<span class="o">==</span>
+<span class="nt">-----END</span> PUBLIC KEY-----
+</code></pre></div></div>
+
+<p>If the export was sucessfull, the <em>private key keyname:zfs-crypt-storage-1</em> can be deleted:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pkcs11-tool <span class="se">\</span>
+    <span class="nt">--delete-object</span> <span class="se">\</span>
+    <span class="nt">--type</span> privkey <span class="se">\</span>
+    <span class="nt">--login</span> <span class="se">\</span>
+    <span class="nt">--id</span> f8a2537ed2d484ad18325c051a17ef04d36f8c5d
+</code></pre></div></div>
+
+<h2 id="create-the-encrypted-zfs-filesystem">Create the encrypted ZFS filesystem</h2>
+<p>To use openssl with a <em>HSM</em>, the pkcs11-url needs to be provided to the commandline tool.
+In this example our <em>HSM</em> has the serial number <code class="language-plaintext highlighter-rouge">DENK02123456</code>.</p>
+
+<p>To get detailed information about the connected devices (HSM, Smart Cards, …), the tool <code class="language-plaintext highlighter-rouge">p11tool</code> is very helpful. In normal the case, business PCs/Laptops has smart card reader on board and will show here additional devices beside the <em>HSM</em>.</p>
+
+<p>For this example the output of the <em>HSM</em> look something like:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>p11tool <span class="nt">--list-tokens</span>
+pkcs11:model<span class="o">=</span>PKCS%2315%20emulated<span class="p">;</span><span class="nv">manufacturer</span><span class="o">=</span>www.CardContact.de<span class="p">;</span><span class="nv">serial</span><span class="o">=</span>DENK02123456<span class="p">;</span><span class="nv">token</span><span class="o">=</span>ZFS%20Crypto%20%28UserPIN%29%00%00%00%00%00%00%00%00%00%00%00%00
+</code></pre></div></div>
+<p>In most cases, only the serial number <code class="language-plaintext highlighter-rouge">(pkcs11:serial=DENK02123456)</code> is necessary to address the <em>HSM</em>. To get the pkcs11-url for the relevant key, an overview can be printed out with the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>p11tool <span class="nt">--list-all</span> <span class="s2">"pkcs11:serial=DENK02123456"</span>
+Object 0:
+	URL: pkcs11:model<span class="o">=</span>PKCS%2315%20emulated<span class="p">;</span><span class="nv">manufacturer</span><span class="o">=</span>www.CardContact.de<span class="p">;</span><span class="nv">serial</span><span class="o">=</span>DENK02123456<span class="p">;</span><span class="nv">token</span><span class="o">=</span>ZFS%20Crypto%20%28UserPIN%29%00%00%00%00%00%00%00%00%00%00%00%00<span class="p">;</span><span class="nb">id</span><span class="o">=</span>%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67<span class="p">;</span><span class="nv">object</span><span class="o">=</span>keyname%3Azfs-master<span class="p">;</span><span class="nb">type</span><span class="o">=</span>public
+	Type: Public key <span class="o">(</span>EC/ECDSA-SECP256R1<span class="o">)</span>
+	Label: keyname:zfs-master
+	ID: f2:a6:9a:e9:49:e5:e3:f5:18:86:e3:1a:a8:1a:7c:43:32:69:b1:67
+</code></pre></div></div>
+
+<p>In most cases, the url can be shortend to <code class="language-plaintext highlighter-rouge">pkcs11:serial=DENK02123456;id=%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67</code>. Take in mind, that the key ID of <em>keyname:zfs-master</em> <code class="language-plaintext highlighter-rouge">(f2a69ae949e5e3f51886e31aa81a7c433269b167)</code> is given as hex value and needs to be written with a leading <code class="language-plaintext highlighter-rouge">%</code> for every hex group <code class="language-plaintext highlighter-rouge">(%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67)</code>.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl pkeyutl <span class="nt">-derive</span> <span class="se">\</span>
+    <span class="nt">-engine</span> pkcs11 <span class="se">\</span>
+    <span class="nt">-keyform</span> engine <span class="se">\</span>
+    <span class="nt">-peerform</span> PEM <span class="se">\</span>
+    <span class="nt">-inkey</span> <span class="s2">"pkcs11:serial=DENK02123456;id=%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67"</span> <span class="se">\</span>
+    <span class="nt">-peerkey</span> zfs-crypt-storage-1.pub.pem <span class="se">\</span>
+    <span class="nt">-out</span> 00_11_key.bin
+</code></pre></div></div>
+
+<p>Create encrypted ZFS Filesystem</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl pkeyutl <span class="nt">-derive</span> <span class="se">\</span>
+    <span class="nt">-engine</span> pkcs11 <span class="se">\</span>
+    <span class="nt">-keyform</span> engine <span class="se">\</span>
+    <span class="nt">-peerform</span> PEM <span class="se">\</span>
+    <span class="nt">-inkey</span> <span class="s2">"pkcs11:serial=DENK02123456;id=%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67"</span> <span class="se">\</span>
+    <span class="nt">-peerkey</span> zfs-crypt-storage-1.pub.pem <span class="se">\</span>
+    | zfs create <span class="nt">-o</span> <span class="nv">encryption</span><span class="o">=</span>aes-256-ccm <span class="nt">-o</span> <span class="nv">keyformat</span><span class="o">=</span>raw pool1/crypthsm            
+</code></pre></div></div>
+
+<p>Mount encrypted ZFS</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl pkeyutl <span class="nt">-derive</span> <span class="se">\</span>
+    <span class="nt">-engine</span> pkcs11 <span class="se">\</span>
+    <span class="nt">-keyform</span> engine <span class="se">\</span>
+    <span class="nt">-peerform</span> PEM <span class="se">\</span>
+    <span class="nt">-inkey</span> <span class="s2">"pkcs11:serial=DENK02123456;id=%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67"</span> <span class="se">\</span>
+    <span class="nt">-peerkey</span> zfs-crypt-storage-1.pub.pem <span class="se">\</span>
+    | zfs load-key pool1/crypthsm
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zfs mount pool1/crypthsm
+</code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zfs unmount <span class="nt">-a</span> <span class="o">&amp;&amp;</span> zfs unload-key <span class="nt">-a</span>
+</code></pre></div></div>
+
+
+                <div class="tags">
+                        Tags:
+                        
+                        <span class="tag">
+                                <a href="/tags/##zfs">#zfs</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##openzfs">#openzfs</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##bash">#bash</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##hsm">#hsm</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##encryption">#encryption</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##en">#EN</a>
+                        </span>
+                        
+                </div>
+        </div>
+
+        <div class="pagenavigation">
+                
+                <a class="prev" href="/2023-02-01/Delete-Old-ZFS-Snapshots.html">&laquo; Delete Old Zfs Snapshots</a>
+                
+                
+                <a class="next" href="/2023-04-08/Getreidesorten.html">Getreidesorten &raquo;</a>
+                
+        </div>
+</div>
+  </div>
+  <div id="footer">Randomate Blog | v. 1.5.0 | 1712771886</div>
+  </body>
+</html>
