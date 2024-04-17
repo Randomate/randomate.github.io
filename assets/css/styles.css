@@ -4,7 +4,9 @@ html { margin: 1em; font-size: 1em; }
 
 body { background-color: white; }
 
-table { border-collapse: collapse; width: 100%; }
+.post-frame h2, h3, h4, h5, h6 { margin-top: 1em; border-top: 1px solid #0084ff; }
+
+table { border-collapse: collapse; width: 100%; margin-top: 2em; }
 
 table td, table th { border: 1px solid #ddd; padding: 8px; }
 
@@ -60,7 +62,7 @@ table th { padding-top: 12px; padding-bottom: 12px; text-align: left; background
 
 .image .caption { font-style: italic; text-align: right; width: 100%; margin-left: auto; margin-right: auto; }
 
-@media (prefers-color-scheme: dark) { body, .nav, .postexcerpt, .post-frame, .tag-frame, .imprint { background-color: #202020; color: #f0f0f0; } pre { color: #f0f0f0; } table tr:nth-child(even) { background-color: #4a4a4a; } table th { padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #202020; color: #f0f0f0; } table tr:hover { background-color: #202020; } .postexcerpt, .post-frame, .tag-frame, .imprint { /* background-image: url("/assets/img/bottomframe_dark.svg"); */ border-left: 1px solid #0084ff; } .nav { border-bottom: 1px solid #0084ff; } .nav .date { text-decoration: underline #0084ff; } .image { border: 1px solid lightblue; background-color: #202020; } }
+@media (prefers-color-scheme: dark) { body, .nav, .postexcerpt, .post-frame, .tag-frame, .imprint { background-color: #202020; color: #f0f0f0; } .post-frame h2, h3, h4, h5, h6 { margin-top: 1em; border-top: 1px solid lightblue; } pre { color: #f0f0f0; } table tr:nth-child(even) { background-color: #4a4a4a; } table th { padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #202020; color: #f0f0f0; } table tr:hover { background-color: #202020; } .postexcerpt, .post-frame, .tag-frame, .imprint { /* background-image: url("/assets/img/bottomframe_dark.svg"); */ border-left: 1px solid #0084ff; } .nav { border-bottom: 1px solid #0084ff; } .nav .date { text-decoration: underline #0084ff; } .image { border: 1px solid lightblue; background-color: #202020; } }
 
 @font-face { font-family: 'Raleway-Thin'; src: url(/assets/font/Raleway-Thin.ttf); }
 
