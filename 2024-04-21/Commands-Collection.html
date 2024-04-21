@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/img/fav.png">
-    <meta name='revised' content='2024-04-21T05:02:20-05:00'>
-    <meta name='search_date' content='2024-04-21T05:02:20-05:00'>
-    <meta name='date' content='2024-04-21T05:02:20-05:00'>
-    <meta name="date.updated" content="2024-04-21T05:02:20-05:00; 2024-04-21T05:02:20-05:00">
-    <link rel="stylesheet" href="/assets/css/styles.css?1713693740">
+    <meta name='revised' content='2024-04-21T12:27:18-05:00'>
+    <meta name='search_date' content='2024-04-21T12:27:18-05:00'>
+    <meta name='date' content='2024-04-21T12:27:18-05:00'>
+    <meta name="date.updated" content="2024-04-21T12:27:18-05:00; 2024-04-21T12:27:18-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1713720438">
 <title>Randomate Blog - Commands Collection</title>
   </head>
   <body>
@@ -88,21 +88,21 @@ r.svg
 <hr />
 
 <p>Rename file to lowercase:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="nb">.</span> <span class="nt">-type</span> f <span class="nt">-exec</span> perl-rename <span class="nt">-v</span> <span class="s1">'y/A-Z/a-z/'</span> <span class="o">{}</span> <span class="se">\;</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>find <span class="nb">.</span> <span class="nt">-type</span> f <span class="nt">-exec</span> perl-rename <span class="nt">-v</span> <span class="s1">'y/A-Z/a-z/'</span> <span class="o">{}</span> <span class="se">\;</span>
 </code></pre></div></div>
 
 <hr />
 
 <p>Convert AVI to mp4:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> 2024-03-11_195937_Lichtung_Stangen.AVI <span class="nt">-b</span> 800k output.mp4
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ffmpeg <span class="nt">-i</span> 2024-03-11_195937_Lichtung_Stangen.AVI <span class="nt">-b</span> 800k output.mp4
 </code></pre></div></div>
 
 <hr />
 
 <p>Convert Markdown to PDF:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">"docker run --rm --volume "</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">" --user </span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-u</span><span class="sb">`</span><span class="s2">:</span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-g</span><span class="sb">`</span><span class="s2"> pandoc/latex:2.6"</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">alias </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">"docker run --rm --volume "</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">" --user </span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-u</span><span class="sb">`</span><span class="s2">:</span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-g</span><span class="sb">`</span><span class="s2"> pandoc/latex:2.6"</span>
 
-pandocker <span class="k">in</span>.md <span class="nt">-o</span> out.pdf
+<span class="nv">$ </span>pandocker <span class="k">in</span>.md <span class="nt">-o</span> out.pdf
 </code></pre></div></div>
 
 
@@ -167,11 +167,11 @@ pandocker <span class="k">in</span>.md <span class="nt">-o</span> out.pdf
                 <a class="prev" href="/2024-04-14/Merksaetze-Natur-Tiere-und-Pflanzen.html">&laquo; Merksätze Natur, Tiere Und Pflanzen</a>
                 
                 
-                <span class="next">No next post</span>
+                <a class="next" href="/2024-04-21/Rezept-Knaeckebrot.html">Rezept Knäckebrot &raquo;</a>
                 
         </div>
 </div>
   </div>
-  <div id="footer">Randomate Blog | v. 1.5.1 | 1713693740</div>
+  <div id="footer">Randomate Blog | v. 1.5.1 | 1713720438</div>
   </body>
 </html>
