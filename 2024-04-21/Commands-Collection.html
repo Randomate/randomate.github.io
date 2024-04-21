@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/img/fav.png">
-    <meta name='revised' content='2024-04-19T16:33:36-05:00'>
-    <meta name='search_date' content='2024-04-19T16:33:36-05:00'>
-    <meta name='date' content='2024-04-19T16:33:36-05:00'>
-    <meta name="date.updated" content="2024-04-19T16:33:36-05:00; 2024-04-19T16:33:36-05:00">
-    <link rel="stylesheet" href="/assets/css/styles.css?1713562416">
+    <meta name='revised' content='2024-04-21T05:02:20-05:00'>
+    <meta name='search_date' content='2024-04-21T05:02:20-05:00'>
+    <meta name='date' content='2024-04-21T05:02:20-05:00'>
+    <meta name="date.updated" content="2024-04-21T05:02:20-05:00; 2024-04-21T05:02:20-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1713693740">
 <title>Randomate Blog - Commands Collection</title>
   </head>
   <body>
@@ -97,6 +97,14 @@ r.svg
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> 2024-03-11_195937_Lichtung_Stangen.AVI <span class="nt">-b</span> 800k output.mp4
 </code></pre></div></div>
 
+<hr />
+
+<p>Convert Markdown to PDF:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">"docker run --rm --volume "</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">" --user </span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-u</span><span class="sb">`</span><span class="s2">:</span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-g</span><span class="sb">`</span><span class="s2"> pandoc/latex:2.6"</span>
+
+pandocker <span class="k">in</span>.md <span class="nt">-o</span> out.pdf
+</code></pre></div></div>
+
 
                 <div class="tags">
                         Tags:
@@ -151,7 +159,7 @@ r.svg
                         
                 </div>
 
-                <p class="date">Last update: 2024-04-19</p>
+                <p class="date">Last update: 2024-04-21</p>
         </div>
 
         <div class="pagenavigation">
@@ -164,6 +172,6 @@ r.svg
         </div>
 </div>
   </div>
-  <div id="footer">Randomate Blog | v. 1.5.1 | 1713562416</div>
+  <div id="footer">Randomate Blog | v. 1.5.1 | 1713693740</div>
   </body>
 </html>
