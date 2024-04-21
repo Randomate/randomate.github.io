@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/img/fav.png">
-    <meta name='revised' content='2024-04-21T12:48:37-05:00'>
-    <meta name='search_date' content='2024-04-21T12:48:37-05:00'>
-    <meta name='date' content='2024-04-21T12:48:37-05:00'>
-    <meta name="date.updated" content="2024-04-21T12:48:37-05:00; 2024-04-21T12:48:37-05:00">
-    <link rel="stylesheet" href="/assets/css/styles.css?1713721717">
+    <meta name='revised' content='2024-04-21T13:00:40-05:00'>
+    <meta name='search_date' content='2024-04-21T13:00:40-05:00'>
+    <meta name='date' content='2024-04-21T13:00:40-05:00'>
+    <meta name="date.updated" content="2024-04-21T13:00:40-05:00; 2024-04-21T13:00:40-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1713722440">
 <title>Randomate Blog - Commands Collection</title>
   </head>
   <body>
@@ -28,23 +28,17 @@
         <h1 class="title">Commands Collection</h1>
                 <p>Collection of helpful Linux commands.</p>
 
-<hr />
-
-<p>List File With Leading Line Numbers:</p>
+<h2 id="list-file-with-leading-line-numbers">List File With Leading Line Numbers</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">nl</span> <span class="nt">-w2</span> <span class="nt">-s</span><span class="s2">"| "</span> testfile.txt
  1| This is a <span class="nb">test </span>file
  2| with line break.
 </code></pre></div></div>
 
-<hr />
-
-<p>Fast Search:</p>
+<h2 id="fast-search">Fast Search</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fd searchString
 </code></pre></div></div>
 
-<hr />
-
-<p>Generate and Read QR Codes:</p>
+<h2 id="generate-and-read-qr-codes">Generate and Read QR Codes</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Generate</span>
 <span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"some data"</span> | <span class="nb">base64</span> <span class="nt">-w</span> 0 | qrencode <span class="nt">-l</span> Q <span class="nt">-t</span> SVG <span class="nt">-o</span> /tmp/q
 r.svg
@@ -53,9 +47,7 @@ r.svg
 <span class="nv">$ </span>zbarimg <span class="nt">-q</span> /tmp/qr.svg | <span class="nb">cut</span> <span class="nt">-c</span> 9- | <span class="nb">base64</span> <span class="nt">-d</span>
 </code></pre></div></div>
 
-<hr />
-
-<p>Generate Duplex PDF from Single Page Scan:</p>
+<h2 id="generate-duplex-pdf-from-single-page-scan">Generate Duplex PDF from Single Page Scan</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Change order of even pages</span>
 <span class="nv">$ </span>/usr/bin/pdftk EvenPages.pdf <span class="nb">cat </span>end-1 output BackWardsEvenPages.pdf
 
@@ -66,15 +58,11 @@ r.svg
 <span class="nv">$ </span>/usr/bin/pdftk FinalDocument.pdf <span class="nb">cat </span>1-r2 output FinalDocumentWithoutLast.pdf
 </code></pre></div></div>
 
-<hr />
-
-<p>Rename Media Files to Create Date:</p>
+<h2 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>exiftool <span class="nt">-d</span> <span class="s1">'%Y-%m-%d_%H%M%S.%%e'</span> <span class="s1">'-filename&lt;CreateDate'</span> <span class="nt">-v</span> 1 <span class="k">*</span>
 </code></pre></div></div>
 
-<hr />
-
-<p>Remove DRM from PDF:</p>
+<h2 id="remove-drm-from-pdf">Remove DRM from PDF</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Login to Adobe DRM</span>
 <span class="nv">$ </span>adept_activate <span class="nt">--username</span> ADOBE_LOGIN_USERNAME <span class="nt">--password</span> ADOBE_LOGIN_PASSWORD
 
@@ -85,21 +73,15 @@ r.svg
 <span class="nv">$ </span>adept_remove TMPOUT
 </code></pre></div></div>
 
-<hr />
-
-<p>Rename file to lowercase:</p>
+<h2 id="rename-file-in-folder-to-lowercase">Rename File in Folder to Lowercase</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>find <span class="nb">.</span> <span class="nt">-type</span> f <span class="nt">-exec</span> perl-rename <span class="nt">-v</span> <span class="s1">'y/A-Z/a-z/'</span> <span class="o">{}</span> <span class="se">\;</span>
 </code></pre></div></div>
 
-<hr />
-
-<p>Convert AVI to mp4:</p>
+<h2 id="convert-avi-to-mp4">Convert AVI to mp4</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ffmpeg <span class="nt">-i</span> input.avi <span class="nt">-b</span> 800k output.mp4
 </code></pre></div></div>
 
-<hr />
-
-<p>Convert Markdown to PDF:</p>
+<h2 id="convert-markdown-to-pdf">Convert Markdown to PDF</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">alias </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">"docker run --rm --volume "</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">" --user </span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-u</span><span class="sb">`</span><span class="s2">:</span><span class="sb">`</span><span class="nb">id</span> <span class="nt">-g</span><span class="sb">`</span><span class="s2"> pandoc/latex:2.6"</span>
 
 <span class="nv">$ </span>pandocker <span class="k">in</span>.md <span class="nt">-o</span> out.pdf
@@ -172,6 +154,6 @@ r.svg
         </div>
 </div>
   </div>
-  <div id="footer">Randomate Blog | v. 1.5.1 | 1713721717</div>
+  <div id="footer">Randomate Blog | v. 1.5.1 | 1713722440</div>
   </body>
 </html>
