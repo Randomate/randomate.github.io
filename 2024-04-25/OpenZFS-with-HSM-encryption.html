@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/img/fav.png">
-    <meta name='revised' content='2024-04-21T17:15:34-05:00'>
-    <meta name='search_date' content='2024-04-21T17:15:34-05:00'>
-    <meta name='date' content='2024-04-21T17:15:34-05:00'>
-    <meta name="date.updated" content="2024-04-21T17:15:34-05:00; 2024-04-21T17:15:34-05:00">
-    <link rel="stylesheet" href="/assets/css/styles.css?1713737734">
+    <meta name='revised' content='2024-04-25T12:27:16-05:00'>
+    <meta name='search_date' content='2024-04-25T12:27:16-05:00'>
+    <meta name='date' content='2024-04-25T12:27:16-05:00'>
+    <meta name="date.updated" content="2024-04-25T12:27:16-05:00; 2024-04-25T12:27:16-05:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?1714066036">
 <title>Randomate Blog - OpenZFS With HSM Encryption</title>
   </head>
   <body>
@@ -135,6 +135,8 @@ Object 0:
     <span class="nt">-out</span> 00_11_key.bin
 </code></pre></div></div>
 
+<p>To encrypt the filesystem a key is derived with ECDH from the public and private key. <strong>Important: OpenSSL mention in the <a href="https://wiki.openssl.org/index.php/Elliptic_Curve_Diffie_Hellman">documentation</a>, that the derived key should not be used directly. Hash the value instead: <em>“Also note that the derived shared secret is not suitable for use directly as a shared key. Typically the shared secret is passed through some hash function first in order to generate a key.”</em></strong></p>
+
 <p>Create encrypted ZFS Filesystem</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl pkeyutl <span class="nt">-derive</span> <span class="se">\</span>
     <span class="nt">-engine</span> pkcs11 <span class="se">\</span>
@@ -142,22 +144,26 @@ Object 0:
     <span class="nt">-peerform</span> PEM <span class="se">\</span>
     <span class="nt">-inkey</span> <span class="s2">"pkcs11:serial=DENK02123456;id=%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67"</span> <span class="se">\</span>
     <span class="nt">-peerkey</span> zfs-crypt-storage-1.pub.pem <span class="se">\</span>
+    | <span class="nb">sha512sum</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="se">\</span>
     | zfs create <span class="nt">-o</span> <span class="nv">encryption</span><span class="o">=</span>aes-256-ccm <span class="nt">-o</span> <span class="nv">keyformat</span><span class="o">=</span>raw pool1/crypthsm            
 </code></pre></div></div>
 
 <p>Mount encrypted ZFS</p>
-
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl pkeyutl <span class="nt">-derive</span> <span class="se">\</span>
     <span class="nt">-engine</span> pkcs11 <span class="se">\</span>
     <span class="nt">-keyform</span> engine <span class="se">\</span>
     <span class="nt">-peerform</span> PEM <span class="se">\</span>
     <span class="nt">-inkey</span> <span class="s2">"pkcs11:serial=DENK02123456;id=%F2%A6%9A%E9%49%E5%E3%F5%18%86%E3%1A%A8%1A%7C%43%32%69%B1%67"</span> <span class="se">\</span>
     <span class="nt">-peerkey</span> zfs-crypt-storage-1.pub.pem <span class="se">\</span>
+    | <span class="nb">sha512sum</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="se">\</span>
     | zfs load-key pool1/crypthsm
 </code></pre></div></div>
 
+<p>Mount the filesystem</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zfs mount pool1/crypthsm
 </code></pre></div></div>
+
+<p>Unmount the filesystem and unload the key from memory</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zfs unmount <span class="nt">-a</span> <span class="o">&amp;&amp;</span> zfs unload-key <span class="nt">-a</span>
 </code></pre></div></div>
 
@@ -191,19 +197,19 @@ Object 0:
                         
                 </div>
 
-                <p class="date">Last update: 2023-03-29</p>
+                <p class="date">Last update: 2024-04-25</p>
         </div>
 
         <div class="pagenavigation">
                 
-                <a class="prev" href="/2023-02-01/Delete-Old-ZFS-Snapshots.html">&laquo; Delete Old ZFS Snapshots</a>
+                <a class="prev" href="/2024-04-21/Rezept-Knaeckebrot.html">&laquo; Rezept Knäckebrot</a>
                 
                 
-                <a class="next" href="/2023-04-08/Getreidesorten.html">Getreidesorten &raquo;</a>
+                <span class="next">No next post</span>
                 
         </div>
 </div>
   </div>
-  <div id="footer">Randomate Blog | v. 1.5.1 | 1713737734</div>
+  <div id="footer">Randomate Blog | v. 1.5.1 | 1714066036</div>
   </body>
 </html>
