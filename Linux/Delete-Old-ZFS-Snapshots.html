@@ -8,22 +8,28 @@
       
       
       
+        <link rel="canonical" href="http://blog.randomate.dev/Linux/Delete-Old-ZFS-Snapshots.html">
       
       
+        <link rel="prev" href="Commands-Collection.html">
       
-      <link rel="icon" href="/assets/images/favicon.png">
+      
+        <link rel="next" href="Firefox-and-SelfCA.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
-        <title>Randomate Documentation</title>
+        <title>Delete Old ZFS Snapshots - Randomate Documentation</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -81,7 +87,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
-    <a href="/index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -101,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Delete Old ZFS Snapshots
             
           </span>
         </div>
@@ -216,7 +222,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -234,7 +240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -254,7 +260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -309,7 +315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
+      <a href="../Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -372,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Getreidesorten.html" class="md-nav__link">
+      <a href="../Haushalt/Getreidesorten.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -393,7 +399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
+      <a href="../Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -414,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
+      <a href="../Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -439,17 +445,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -463,7 +471,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Linux
@@ -477,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
+      <a href="Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -498,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Commands-Collection.html" class="md-nav__link">
+      <a href="Commands-Collection.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -516,10 +524,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/Linux/Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="Delete-Old-ZFS-Snapshots.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -528,6 +543,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -540,7 +556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Firefox-and-SelfCA.html" class="md-nav__link">
+      <a href="Firefox-and-SelfCA.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -561,7 +577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/OpenZFS-with-HSM-encryption.html" class="md-nav__link">
+      <a href="OpenZFS-with-HSM-encryption.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -582,7 +598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/ZFS-clone-snapshots.html" class="md-nav__link">
+      <a href="ZFS-clone-snapshots.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -645,7 +661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
+      <a href="../Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -678,8 +694,241 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
+  
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../tags.html#lang-en" class="md-tag">lang-en</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#openzfs" class="md-tag">openzfs</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#prune" class="md-tag">prune</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#python3" class="md-tag">python3</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#zfs" class="md-tag">zfs</a>
+    
+  
+</nav>
 
+
+
+  <h1>Delete Old ZFS Snapshots</h1>
+
+<p>The script generates a list of existing snapshots, which should be removed from a dataset. For every month <code>DELCOUNT = 3</code> snapshots are preserved for deleting. The snapshots from the current month are also protected. The snapshots needs to be in the following string format: <code>pool/dataset@%Y-%m-%d_%H%M</code>, for example <code>storage/documents@2023-04-24_0625</code>.</p>
+<pre><code class="language-python"># deleteOldZFSSnapshots.py
+
+ 1| import libs.mockdata as md
+ 2| import libs.datemagic as dm
+ 3| import libs.zfsmagic as zm
+ 4| import subprocess
+ 5| import datetime
+ 6| import sys
+ 7| 
+ 8| # dummydates = md.mockDates
+ 9| 
+10| DATASET = sys.argv[1]
+11| 
+12| DATENOW = datetime.datetime.now()
+13| DELCOUNT = 3
+14| 
+15| result = subprocess.run([&quot;zfs&quot;, &quot;list&quot;, &quot;-t&quot;, &quot;snapshot&quot;, &quot;-o&quot;, &quot;name&quot;, DATASET], capture_output=True)
+16| #print(result.stdout.splitlines()[2].decode(&quot;utf-8&quot;))
+17| snapshotentries = result.stdout.splitlines()
+18| print(&quot;Found snapshotentries:&quot;, len(snapshotentries))
+19| zfsdict = dm.sortDates(zm.snapOutToDict(snapshotentries))
+20| print(&quot;Found zfsdict        :&quot;, dm.countsnaps(zfsdict))
+21| delSmaps = zm.removeProtectedSnaps(zfsdict, DATENOW, DELCOUNT)
+22| print(&quot;Size cleanup         :&quot;, dm.countsnaps(delSmaps))
+23| 
+24| dm.pSnapsAsLine(&quot;zfs destroy&quot;, zfsdict)
+25| #dm.ppDates(zfsdict)
+</code></pre>
+<p><br></p>
+<pre><code class="language-python"># libs/datemagic.py
+
+ 1| def sortDates(inDict):
+ 2|     inDict = dict(sorted(inDict.items()))
+ 3| 
+ 4|     for year, months in inDict.items():
+ 5|         # print(&quot;Year:&quot;, year)
+ 6|         months = dict(sorted(months.items()))
+ 7|         inDict[year] = months
+ 8| 
+ 9|         for month, days in months.items():
+10|             # print(&quot;Month:&quot;, month)
+11|             days = dict(sorted(days.items()))
+12|             inDict[year][month] = days
+13| 
+14|     return inDict
+15| 
+16| def countsnaps(inDict):
+17|     count = 0
+18|     for year, months in inDict.items():
+19|         for month, days in months.items():
+20|             for day, daystring in days.items():
+21|                 count = count + 1
+22| 
+23|     return count
+24| 
+25| def ppDates(inDict):
+26|     ycount = 0
+27|     mcount = 0
+28|     dcount = 0
+29|     for year, months in inDict.items():
+30|         ycount = ycount + 1
+31|         mcount = 0
+32|         print(&quot;&quot;, year)
+33|         for month, days in months.items():
+34|             mcount = mcount + 1
+35|             dcount = 0
+36|             print(&quot;  &quot;, month)
+37|             for day, daystring in days.items():
+38|                 dcount = dcount + 1
+39|                 print(&quot;  &quot;, &quot;  &quot;, year, month, day,&quot;:&quot;,daystring)
+40|             print(&quot;  &quot;, &quot;  &quot;, &quot;Days:&quot;, dcount, &quot;for&quot;, month, year, &quot;&quot;)
+41|         print(&quot;  &quot;, &quot;Months:&quot;, mcount, &quot;for&quot;, year, &quot;&quot;)
+42|     print(&quot;Years:&quot;, ycount, &quot;&quot;)
+43| 
+44| def pSnapsAsLine(precommand: str, inDict: {}):
+45|     for year, months in inDict.items():
+46|         for month, days in months.items():
+47|             for day, daystring in days.items():
+48|                 print(precommand, daystring)
+</code></pre>
+<p><br></p>
+<pre><code class="language-python"># libs/zfsmagic.py
+
+ 1| import datetime
+ 2| import libs.datemagic as dm
+ 3| import random
+ 4| 
+ 5| 
+ 6| def snapOutToDict(strin):
+ 7|     returnDict = {}
+ 8|     #print(type(returnDict), returnDict)
+ 9|     #print(type(strin))
+10|     for k in strin[1:]:
+11|         l = k.decode(&quot;UTF-8&quot;).split(&quot;@&quot;)
+12|         #print(k, l[0], l[1])
+13|         datetime = l[1].split(&quot;_&quot;)
+14|         date = datetime[0].split(&quot;-&quot;)
+15|         #print(date[0], date[1], date[2], k.decode(&quot;UTF-8&quot;))
+16|         datedict = {date[2]: k.decode(&quot;UTF-8&quot;)}
+17| 
+18| 
+19|         itm = {date[0]: {date[1]: {date[2]: k.decode(&quot;UTF-8&quot;)}}}
+20|         returnDict = addItemToDict(returnDict, itm)
+21| 
+22|     return returnDict
+23| 
+24| def addItemToDict(inDict: {}, item: {}):
+25|     year = list(item)[0]
+26|     month = list(item[year])[0]
+27|     day = list(item[year][month])[0]
+28|     daystr = item[year][month][day]
+29| 
+30|     if year not in inDict:
+31|         inDict[year] = {}
+32|     if month not in inDict[year]:
+33|         inDict[year][month] = {}
+34|     if day not in inDict[year][month]:
+35|         inDict[year][month][day] = {}
+36| 
+37|     inDict[year][month][day] = daystr
+38| 
+39|     return inDict
+40| 
+41| def removeProtectedSnaps(dictin: {}, today: datetime.date, count: int):
+42|     monthstring = str(f&quot;{today.month:02d}&quot;)
+43|     yearstring = str(today.year)
+44|     try:
+45|         del dictin[yearstring][monthstring]
+46|     except KeyError:
+47|         print(&quot;Not in Dictionary:&quot;, yearstring, monthstring)
+48| 
+49|     for y in dictin:
+50|         for m in dictin[y]:
+51|             #print(dictin[y][m])
+52|             dictin[y][m] = randomDelMonth(dictin[y][m], count)
+53| 
+54|     return dictin
+55| 
+56| def randomDelMonth(dictin: {}, count: int):
+57|     lenmonth = len(dictin)
+58| 
+59|     #print(lenmonth, count)
+60|     if lenmonth &lt;= count:
+61|         return {}
+62| 
+63|     for i in range(count):
+64|         rndindex = random.randint(0, lenmonth - 1 - i)
+65|         tmpkey = list(dictin.keys())[rndindex]
+66|         del dictin[tmpkey]
+67| 
+68|     return dictin
+</code></pre>
+<p><br></p>
+<pre><code class="language-python"># libs/mockdata.py
+
+ 1| mockDates = {
+ 2|     &quot;2020&quot;: {
+ 3|         &quot;05&quot;: {
+ 4|             &quot;02&quot;: &quot;2022-05-02&quot;,
+ 5|             &quot;01&quot;: &quot;2022-05-01&quot;
+ 6|             },
+ 7|         &quot;03&quot;: {
+ 8|             &quot;06&quot;: &quot;2022-03-06&quot;,
+ 9|             &quot;02&quot;: &quot;2022-03-02&quot;
+10|             },
+11|     },
+12|     &quot;1990&quot;: {
+13|         &quot;06&quot;: {
+14|             &quot;02&quot;: &quot;1999-06-02&quot;,
+15|             &quot;01&quot;: &quot;1999-06-01&quot;
+16|             },
+17|         &quot;02&quot;: {
+18|             &quot;06&quot;: &quot;1999-02-06&quot;,
+19|             &quot;02&quot;: &quot;1999-02-02&quot;
+20|             },
+21|     }
+22| }
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -713,10 +962,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "/assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
-      <script src="/assets/javascripts/bundle.ebd0bdb7.min.js"></script>
+      <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
     
   </body>

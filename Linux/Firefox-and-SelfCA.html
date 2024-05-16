@@ -8,22 +8,28 @@
       
       
       
+        <link rel="canonical" href="http://blog.randomate.dev/Linux/Firefox-and-SelfCA.html">
       
       
+        <link rel="prev" href="Delete-Old-ZFS-Snapshots.html">
       
-      <link rel="icon" href="/assets/images/favicon.png">
+      
+        <link rel="next" href="OpenZFS-with-HSM-encryption.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
-        <title>Randomate Documentation</title>
+        <title>Firefox And SelfCA - Randomate Documentation</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -69,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#howto" class="md-skip">
+          Zum Inhalt
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -81,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
-    <a href="/index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -101,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Firefox And SelfCA
             
           </span>
         </div>
@@ -216,7 +227,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -234,7 +245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -254,7 +265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -309,7 +320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
+      <a href="../Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -372,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Getreidesorten.html" class="md-nav__link">
+      <a href="../Haushalt/Getreidesorten.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -393,7 +404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
+      <a href="../Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -414,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
+      <a href="../Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -439,17 +450,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -463,7 +476,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Linux
@@ -477,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
+      <a href="Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -498,7 +511,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Commands-Collection.html" class="md-nav__link">
+      <a href="Commands-Collection.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -519,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
+      <a href="Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -537,10 +550,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/Linux/Firefox-and-SelfCA.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Firefox And SelfCA
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Firefox-and-SelfCA.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -549,6 +580,33 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#howto" class="md-nav__link">
+    <span class="md-ellipsis">
+      Howto
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -561,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/OpenZFS-with-HSM-encryption.html" class="md-nav__link">
+      <a href="OpenZFS-with-HSM-encryption.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -582,7 +640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/ZFS-clone-snapshots.html" class="md-nav__link">
+      <a href="ZFS-clone-snapshots.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -645,7 +703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
+      <a href="../Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -678,8 +736,84 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
+  
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../tags.html#certificate" class="md-tag">certificate</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#certificate-authority" class="md-tag">certificate-authority</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#firefox" class="md-tag">firefox</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#lang-en" class="md-tag">lang-en</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#security" class="md-tag">security</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#selfca" class="md-tag">selfca</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#selfsigned" class="md-tag">selfsigned</a>
+    
+  
+</nav>
 
+
+
+  <h1>Firefox And SelfCA</h1>
+
+<p>How to allow selfsigned CA in Firefox for Android</p>
+<h2 id="howto">Howto</h2>
+<ol>
+<li>Go to Firefox settings</li>
+<li>Go to "About Firefox"</li>
+<li>Tap the Firefox logo multiple times (normally seven)</li>
+<li>Back to settings level -&gt; open "Secret Settings"</li>
+<li>Enable "Use third party CA certificates"</li>
+<li>Restart the app</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -713,10 +847,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "/assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
-      <script src="/assets/javascripts/bundle.ebd0bdb7.min.js"></script>
+      <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
     
   </body>

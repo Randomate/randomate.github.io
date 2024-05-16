@@ -8,22 +8,28 @@
       
       
       
+        <link rel="canonical" href="http://blog.randomate.dev/Linux/ZFS-clone-snapshots.html">
       
       
+        <link rel="prev" href="OpenZFS-with-HSM-encryption.html">
       
-      <link rel="icon" href="/assets/images/favicon.png">
+      
+        <link rel="next" href="../Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
-        <title>Randomate Documentation</title>
+        <title>ZFS Clone Snapshots - Randomate Documentation</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -81,7 +87,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
-    <a href="/index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -101,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              ZFS Clone Snapshots
             
           </span>
         </div>
@@ -216,7 +222,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -234,7 +240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -254,7 +260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -309,7 +315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
+      <a href="../Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -372,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Getreidesorten.html" class="md-nav__link">
+      <a href="../Haushalt/Getreidesorten.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -393,7 +399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
+      <a href="../Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -414,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
+      <a href="../Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -439,17 +445,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -463,7 +471,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Linux
@@ -477,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
+      <a href="Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -498,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Commands-Collection.html" class="md-nav__link">
+      <a href="Commands-Collection.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -519,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
+      <a href="Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -540,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Firefox-and-SelfCA.html" class="md-nav__link">
+      <a href="Firefox-and-SelfCA.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -561,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/OpenZFS-with-HSM-encryption.html" class="md-nav__link">
+      <a href="OpenZFS-with-HSM-encryption.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -579,10 +587,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/Linux/ZFS-clone-snapshots.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="ZFS-clone-snapshots.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -591,6 +606,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -645,7 +661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
+      <a href="../Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -678,8 +694,84 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
+  
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../tags.html#bash" class="md-tag">bash</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#clone" class="md-tag">clone</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#lang-en" class="md-tag">lang-en</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#openzfs" class="md-tag">openzfs</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#zfs" class="md-tag">zfs</a>
+    
+  
+</nav>
 
+
+
+  <h1>ZFS Clone Snapshots</h1>
+
+<p>The following script clones a zfs dataset with all available snapshots. The variable <code>source=${1}</code> defines the source dataset, <code>dest=${2}</code> defines the destination dataset. The destination dataset must be created in advanced manually.</p>
+<pre><code class="language-bash"> 1| #!/bin/bash
+ 2| 
+ 3| source=${1}
+ 4| source_mountpoint=$(/usr/sbin/zfs get mountpoint -o value -H ${source})
+ 5| source_snappath=${source_mountpoint}/.zfs/snapshot
+ 6| dest=${2}
+ 7| dest_mountpoint=$(/usr/sbin/zfs get mountpoint -o value -H ${dest})
+ 8| 
+ 9| snaps=(${source_snappath}/*)
+10| 
+11| IFS=$'\n' snaps=($(sort &lt;&lt;&lt;&quot;${snaps[*]}&quot;))
+12| unset IFS
+13| 
+14| for f in &quot;${snaps[@]}&quot;; do
+15|    echo &quot;Copy $f&quot;
+16|    snapname=$(basename &quot;$f&quot;)
+17|    /usr/bin/rsync -a --progress --delete ${f}/ ${dest_mountpoint}
+18|    /usr/sbin/zfs snapshot ${dest}@${snapname}
+19|    echo &quot;-------------------------------------------------&quot;
+20| done
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -713,10 +805,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "/assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
-      <script src="/assets/javascripts/bundle.ebd0bdb7.min.js"></script>
+      <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
     
   </body>
