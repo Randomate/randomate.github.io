@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/img/fav.png">
+    <meta name='revised' content='2023-02-01T00:00:00-06:00'>
+    <meta name='search_date' content='2023-02-01T00:00:00-06:00'>
+    <meta name='date' content='2023-02-01T00:00:00-06:00'>
+    <meta name="date.updated" content="2023-02-01T00:00:00-06:00; 2023-02-01T00:00:00-06:00">
+    <link rel="stylesheet" href="/assets/css/styles.css?v=1.5.1">
+    <title>Randomate Blog - Delete Old ZFS Snapshots</title>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav nav-pills">
+  
+    <a href="/" class="nav-link">Home</a>
+  
+    <a href="/tags/" class="nav-link">Tags</a>
+  
+    <a href="/imprint/" class="nav-link">Imprint</a>
+  
+</nav>
+ <div class="post">
+        <div class="post-frame">
+        <h1 class="title">Delete Old ZFS Snapshots</h1>
+                <p>The script generates a list of existing snapshots, which should be removed from a dataset. For every month <code class="language-plaintext highlighter-rouge">DELCOUNT = 3</code> snapshots are preserved for deleting. The snapshots from the current month are also protected. The snapshots needs to be in the following string format: <code class="language-plaintext highlighter-rouge">pool/dataset@%Y-%m-%d_%H%M</code>, for example <code class="language-plaintext highlighter-rouge">storage/documents@2023-04-24_0625</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># deleteOldZFSSnapshots.py
+</span>
+ <span class="mi">1</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">libs.mockdata</span> <span class="k">as</span> <span class="n">md</span>
+ <span class="mi">2</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">libs.datemagic</span> <span class="k">as</span> <span class="n">dm</span>
+ <span class="mi">3</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">libs.zfsmagic</span> <span class="k">as</span> <span class="n">zm</span>
+ <span class="mi">4</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">subprocess</span>
+ <span class="mi">5</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">datetime</span>
+ <span class="mi">6</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">sys</span>
+ <span class="mi">7</span><span class="o">|</span> 
+ <span class="mi">8</span><span class="o">|</span> <span class="c1"># dummydates = md.mockDates
+</span> <span class="mi">9</span><span class="o">|</span> 
+<span class="mi">10</span><span class="o">|</span> <span class="n">DATASET</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="mi">11</span><span class="o">|</span> 
+<span class="mi">12</span><span class="o">|</span> <span class="n">DATENOW</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+<span class="mi">13</span><span class="o">|</span> <span class="n">DELCOUNT</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="mi">14</span><span class="o">|</span> 
+<span class="mi">15</span><span class="o">|</span> <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="s">"zfs"</span><span class="p">,</span> <span class="s">"list"</span><span class="p">,</span> <span class="s">"-t"</span><span class="p">,</span> <span class="s">"snapshot"</span><span class="p">,</span> <span class="s">"-o"</span><span class="p">,</span> <span class="s">"name"</span><span class="p">,</span> <span class="n">DATASET</span><span class="p">],</span> <span class="n">capture_output</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="mi">16</span><span class="o">|</span> <span class="c1">#print(result.stdout.splitlines()[2].decode("utf-8"))
+</span><span class="mi">17</span><span class="o">|</span> <span class="n">snapshotentries</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="mi">18</span><span class="o">|</span> <span class="k">print</span><span class="p">(</span><span class="s">"Found snapshotentries:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">snapshotentries</span><span class="p">))</span>
+<span class="mi">19</span><span class="o">|</span> <span class="n">zfsdict</span> <span class="o">=</span> <span class="n">dm</span><span class="p">.</span><span class="n">sortDates</span><span class="p">(</span><span class="n">zm</span><span class="p">.</span><span class="n">snapOutToDict</span><span class="p">(</span><span class="n">snapshotentries</span><span class="p">))</span>
+<span class="mi">20</span><span class="o">|</span> <span class="k">print</span><span class="p">(</span><span class="s">"Found zfsdict        :"</span><span class="p">,</span> <span class="n">dm</span><span class="p">.</span><span class="n">countsnaps</span><span class="p">(</span><span class="n">zfsdict</span><span class="p">))</span>
+<span class="mi">21</span><span class="o">|</span> <span class="n">delSmaps</span> <span class="o">=</span> <span class="n">zm</span><span class="p">.</span><span class="n">removeProtectedSnaps</span><span class="p">(</span><span class="n">zfsdict</span><span class="p">,</span> <span class="n">DATENOW</span><span class="p">,</span> <span class="n">DELCOUNT</span><span class="p">)</span>
+<span class="mi">22</span><span class="o">|</span> <span class="k">print</span><span class="p">(</span><span class="s">"Size cleanup         :"</span><span class="p">,</span> <span class="n">dm</span><span class="p">.</span><span class="n">countsnaps</span><span class="p">(</span><span class="n">delSmaps</span><span class="p">))</span>
+<span class="mi">23</span><span class="o">|</span> 
+<span class="mi">24</span><span class="o">|</span> <span class="n">dm</span><span class="p">.</span><span class="n">pSnapsAsLine</span><span class="p">(</span><span class="s">"zfs destroy"</span><span class="p">,</span> <span class="n">zfsdict</span><span class="p">)</span>
+<span class="mi">25</span><span class="o">|</span> <span class="c1">#dm.ppDates(zfsdict)
+</span></code></pre></div></div>
+
+<p><br /></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># libs/datemagic.py
+</span>
+ <span class="mi">1</span><span class="o">|</span> <span class="k">def</span> <span class="nf">sortDates</span><span class="p">(</span><span class="n">inDict</span><span class="p">):</span>
+ <span class="mi">2</span><span class="o">|</span>     <span class="n">inDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">inDict</span><span class="p">.</span><span class="n">items</span><span class="p">()))</span>
+ <span class="mi">3</span><span class="o">|</span> 
+ <span class="mi">4</span><span class="o">|</span>     <span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">months</span> <span class="ow">in</span> <span class="n">inDict</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+ <span class="mi">5</span><span class="o">|</span>         <span class="c1"># print("Year:", year)
+</span> <span class="mi">6</span><span class="o">|</span>         <span class="n">months</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">months</span><span class="p">.</span><span class="n">items</span><span class="p">()))</span>
+ <span class="mi">7</span><span class="o">|</span>         <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">months</span>
+ <span class="mi">8</span><span class="o">|</span> 
+ <span class="mi">9</span><span class="o">|</span>         <span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">days</span> <span class="ow">in</span> <span class="n">months</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">10</span><span class="o">|</span>             <span class="c1"># print("Month:", month)
+</span><span class="mi">11</span><span class="o">|</span>             <span class="n">days</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">days</span><span class="p">.</span><span class="n">items</span><span class="p">()))</span>
+<span class="mi">12</span><span class="o">|</span>             <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">][</span><span class="n">month</span><span class="p">]</span> <span class="o">=</span> <span class="n">days</span>
+<span class="mi">13</span><span class="o">|</span> 
+<span class="mi">14</span><span class="o">|</span>     <span class="k">return</span> <span class="n">inDict</span>
+<span class="mi">15</span><span class="o">|</span> 
+<span class="mi">16</span><span class="o">|</span> <span class="k">def</span> <span class="nf">countsnaps</span><span class="p">(</span><span class="n">inDict</span><span class="p">):</span>
+<span class="mi">17</span><span class="o">|</span>     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="mi">18</span><span class="o">|</span>     <span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">months</span> <span class="ow">in</span> <span class="n">inDict</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">19</span><span class="o">|</span>         <span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">days</span> <span class="ow">in</span> <span class="n">months</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">20</span><span class="o">|</span>             <span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">daystring</span> <span class="ow">in</span> <span class="n">days</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">21</span><span class="o">|</span>                 <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="mi">22</span><span class="o">|</span> 
+<span class="mi">23</span><span class="o">|</span>     <span class="k">return</span> <span class="n">count</span>
+<span class="mi">24</span><span class="o">|</span> 
+<span class="mi">25</span><span class="o">|</span> <span class="k">def</span> <span class="nf">ppDates</span><span class="p">(</span><span class="n">inDict</span><span class="p">):</span>
+<span class="mi">26</span><span class="o">|</span>     <span class="n">ycount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="mi">27</span><span class="o">|</span>     <span class="n">mcount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="mi">28</span><span class="o">|</span>     <span class="n">dcount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="mi">29</span><span class="o">|</span>     <span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">months</span> <span class="ow">in</span> <span class="n">inDict</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">30</span><span class="o">|</span>         <span class="n">ycount</span> <span class="o">=</span> <span class="n">ycount</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="mi">31</span><span class="o">|</span>         <span class="n">mcount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="mi">32</span><span class="o">|</span>         <span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span>
+<span class="mi">33</span><span class="o">|</span>         <span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">days</span> <span class="ow">in</span> <span class="n">months</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">34</span><span class="o">|</span>             <span class="n">mcount</span> <span class="o">=</span> <span class="n">mcount</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="mi">35</span><span class="o">|</span>             <span class="n">dcount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="mi">36</span><span class="o">|</span>             <span class="k">print</span><span class="p">(</span><span class="s">"  "</span><span class="p">,</span> <span class="n">month</span><span class="p">)</span>
+<span class="mi">37</span><span class="o">|</span>             <span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">daystring</span> <span class="ow">in</span> <span class="n">days</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">38</span><span class="o">|</span>                 <span class="n">dcount</span> <span class="o">=</span> <span class="n">dcount</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="mi">39</span><span class="o">|</span>                 <span class="k">print</span><span class="p">(</span><span class="s">"  "</span><span class="p">,</span> <span class="s">"  "</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span><span class="s">":"</span><span class="p">,</span><span class="n">daystring</span><span class="p">)</span>
+<span class="mi">40</span><span class="o">|</span>             <span class="k">print</span><span class="p">(</span><span class="s">"  "</span><span class="p">,</span> <span class="s">"  "</span><span class="p">,</span> <span class="s">"Days:"</span><span class="p">,</span> <span class="n">dcount</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+<span class="mi">41</span><span class="o">|</span>         <span class="k">print</span><span class="p">(</span><span class="s">"  "</span><span class="p">,</span> <span class="s">"Months:"</span><span class="p">,</span> <span class="n">mcount</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+<span class="mi">42</span><span class="o">|</span>     <span class="k">print</span><span class="p">(</span><span class="s">"Years:"</span><span class="p">,</span> <span class="n">ycount</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+<span class="mi">43</span><span class="o">|</span> 
+<span class="mi">44</span><span class="o">|</span> <span class="k">def</span> <span class="nf">pSnapsAsLine</span><span class="p">(</span><span class="n">precommand</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">inDict</span><span class="p">:</span> <span class="p">{}):</span>
+<span class="mi">45</span><span class="o">|</span>     <span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">months</span> <span class="ow">in</span> <span class="n">inDict</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">46</span><span class="o">|</span>         <span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">days</span> <span class="ow">in</span> <span class="n">months</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">47</span><span class="o">|</span>             <span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">daystring</span> <span class="ow">in</span> <span class="n">days</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="mi">48</span><span class="o">|</span>                 <span class="k">print</span><span class="p">(</span><span class="n">precommand</span><span class="p">,</span> <span class="n">daystring</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># libs/zfsmagic.py
+</span>
+ <span class="mi">1</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">datetime</span>
+ <span class="mi">2</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">libs.datemagic</span> <span class="k">as</span> <span class="n">dm</span>
+ <span class="mi">3</span><span class="o">|</span> <span class="kn">import</span> <span class="nn">random</span>
+ <span class="mi">4</span><span class="o">|</span> 
+ <span class="mi">5</span><span class="o">|</span> 
+ <span class="mi">6</span><span class="o">|</span> <span class="k">def</span> <span class="nf">snapOutToDict</span><span class="p">(</span><span class="n">strin</span><span class="p">):</span>
+ <span class="mi">7</span><span class="o">|</span>     <span class="n">returnDict</span> <span class="o">=</span> <span class="p">{}</span>
+ <span class="mi">8</span><span class="o">|</span>     <span class="c1">#print(type(returnDict), returnDict)
+</span> <span class="mi">9</span><span class="o">|</span>     <span class="c1">#print(type(strin))
+</span><span class="mi">10</span><span class="o">|</span>     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">strin</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+<span class="mi">11</span><span class="o">|</span>         <span class="n">l</span> <span class="o">=</span> <span class="n">k</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"UTF-8"</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">"@"</span><span class="p">)</span>
+<span class="mi">12</span><span class="o">|</span>         <span class="c1">#print(k, l[0], l[1])
+</span><span class="mi">13</span><span class="o">|</span>         <span class="n">datetime</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">split</span><span class="p">(</span><span class="s">"_"</span><span class="p">)</span>
+<span class="mi">14</span><span class="o">|</span>         <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">split</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span>
+<span class="mi">15</span><span class="o">|</span>         <span class="c1">#print(date[0], date[1], date[2], k.decode("UTF-8"))
+</span><span class="mi">16</span><span class="o">|</span>         <span class="n">datedict</span> <span class="o">=</span> <span class="p">{</span><span class="n">date</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">k</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"UTF-8"</span><span class="p">)}</span>
+<span class="mi">17</span><span class="o">|</span> 
+<span class="mi">18</span><span class="o">|</span> 
+<span class="mi">19</span><span class="o">|</span>         <span class="n">itm</span> <span class="o">=</span> <span class="p">{</span><span class="n">date</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="p">{</span><span class="n">date</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="p">{</span><span class="n">date</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">k</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"UTF-8"</span><span class="p">)}}}</span>
+<span class="mi">20</span><span class="o">|</span>         <span class="n">returnDict</span> <span class="o">=</span> <span class="n">addItemToDict</span><span class="p">(</span><span class="n">returnDict</span><span class="p">,</span> <span class="n">itm</span><span class="p">)</span>
+<span class="mi">21</span><span class="o">|</span> 
+<span class="mi">22</span><span class="o">|</span>     <span class="k">return</span> <span class="n">returnDict</span>
+<span class="mi">23</span><span class="o">|</span> 
+<span class="mi">24</span><span class="o">|</span> <span class="k">def</span> <span class="nf">addItemToDict</span><span class="p">(</span><span class="n">inDict</span><span class="p">:</span> <span class="p">{},</span> <span class="n">item</span><span class="p">:</span> <span class="p">{}):</span>
+<span class="mi">25</span><span class="o">|</span>     <span class="n">year</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">item</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="mi">26</span><span class="o">|</span>     <span class="n">month</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">year</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="mi">27</span><span class="o">|</span>     <span class="n">day</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">year</span><span class="p">][</span><span class="n">month</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="mi">28</span><span class="o">|</span>     <span class="n">daystr</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="n">year</span><span class="p">][</span><span class="n">month</span><span class="p">][</span><span class="n">day</span><span class="p">]</span>
+<span class="mi">29</span><span class="o">|</span> 
+<span class="mi">30</span><span class="o">|</span>     <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inDict</span><span class="p">:</span>
+<span class="mi">31</span><span class="o">|</span>         <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="mi">32</span><span class="o">|</span>     <span class="k">if</span> <span class="n">month</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">]:</span>
+<span class="mi">33</span><span class="o">|</span>         <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">][</span><span class="n">month</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="mi">34</span><span class="o">|</span>     <span class="k">if</span> <span class="n">day</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">][</span><span class="n">month</span><span class="p">]:</span>
+<span class="mi">35</span><span class="o">|</span>         <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">][</span><span class="n">month</span><span class="p">][</span><span class="n">day</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="mi">36</span><span class="o">|</span> 
+<span class="mi">37</span><span class="o">|</span>     <span class="n">inDict</span><span class="p">[</span><span class="n">year</span><span class="p">][</span><span class="n">month</span><span class="p">][</span><span class="n">day</span><span class="p">]</span> <span class="o">=</span> <span class="n">daystr</span>
+<span class="mi">38</span><span class="o">|</span> 
+<span class="mi">39</span><span class="o">|</span>     <span class="k">return</span> <span class="n">inDict</span>
+<span class="mi">40</span><span class="o">|</span> 
+<span class="mi">41</span><span class="o">|</span> <span class="k">def</span> <span class="nf">removeProtectedSnaps</span><span class="p">(</span><span class="n">dictin</span><span class="p">:</span> <span class="p">{},</span> <span class="n">today</span><span class="p">:</span> <span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="mi">42</span><span class="o">|</span>     <span class="n">monthstring</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">today</span><span class="p">.</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="mi">43</span><span class="o">|</span>     <span class="n">yearstring</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="p">.</span><span class="n">year</span><span class="p">)</span>
+<span class="mi">44</span><span class="o">|</span>     <span class="k">try</span><span class="p">:</span>
+<span class="mi">45</span><span class="o">|</span>         <span class="k">del</span> <span class="n">dictin</span><span class="p">[</span><span class="n">yearstring</span><span class="p">][</span><span class="n">monthstring</span><span class="p">]</span>
+<span class="mi">46</span><span class="o">|</span>     <span class="k">except</span> <span class="nb">KeyError</span><span class="p">:</span>
+<span class="mi">47</span><span class="o">|</span>         <span class="k">print</span><span class="p">(</span><span class="s">"Not in Dictionary:"</span><span class="p">,</span> <span class="n">yearstring</span><span class="p">,</span> <span class="n">monthstring</span><span class="p">)</span>
+<span class="mi">48</span><span class="o">|</span> 
+<span class="mi">49</span><span class="o">|</span>     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">dictin</span><span class="p">:</span>
+<span class="mi">50</span><span class="o">|</span>         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">dictin</span><span class="p">[</span><span class="n">y</span><span class="p">]:</span>
+<span class="mi">51</span><span class="o">|</span>             <span class="c1">#print(dictin[y][m])
+</span><span class="mi">52</span><span class="o">|</span>             <span class="n">dictin</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">randomDelMonth</span><span class="p">(</span><span class="n">dictin</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">m</span><span class="p">],</span> <span class="n">count</span><span class="p">)</span>
+<span class="mi">53</span><span class="o">|</span> 
+<span class="mi">54</span><span class="o">|</span>     <span class="k">return</span> <span class="n">dictin</span>
+<span class="mi">55</span><span class="o">|</span> 
+<span class="mi">56</span><span class="o">|</span> <span class="k">def</span> <span class="nf">randomDelMonth</span><span class="p">(</span><span class="n">dictin</span><span class="p">:</span> <span class="p">{},</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="mi">57</span><span class="o">|</span>     <span class="n">lenmonth</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dictin</span><span class="p">)</span>
+<span class="mi">58</span><span class="o">|</span> 
+<span class="mi">59</span><span class="o">|</span>     <span class="c1">#print(lenmonth, count)
+</span><span class="mi">60</span><span class="o">|</span>     <span class="k">if</span> <span class="n">lenmonth</span> <span class="o">&lt;=</span> <span class="n">count</span><span class="p">:</span>
+<span class="mi">61</span><span class="o">|</span>         <span class="k">return</span> <span class="p">{}</span>
+<span class="mi">62</span><span class="o">|</span> 
+<span class="mi">63</span><span class="o">|</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+<span class="mi">64</span><span class="o">|</span>         <span class="n">rndindex</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">lenmonth</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+<span class="mi">65</span><span class="o">|</span>         <span class="n">tmpkey</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dictin</span><span class="p">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">rndindex</span><span class="p">]</span>
+<span class="mi">66</span><span class="o">|</span>         <span class="k">del</span> <span class="n">dictin</span><span class="p">[</span><span class="n">tmpkey</span><span class="p">]</span>
+<span class="mi">67</span><span class="o">|</span> 
+<span class="mi">68</span><span class="o">|</span>     <span class="k">return</span> <span class="n">dictin</span>
+</code></pre></div></div>
+
+<p><br /></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># libs/mockdata.py
+</span>
+ <span class="mi">1</span><span class="o">|</span> <span class="n">mockDates</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="mi">2</span><span class="o">|</span>     <span class="s">"2020"</span><span class="p">:</span> <span class="p">{</span>
+ <span class="mi">3</span><span class="o">|</span>         <span class="s">"05"</span><span class="p">:</span> <span class="p">{</span>
+ <span class="mi">4</span><span class="o">|</span>             <span class="s">"02"</span><span class="p">:</span> <span class="s">"2022-05-02"</span><span class="p">,</span>
+ <span class="mi">5</span><span class="o">|</span>             <span class="s">"01"</span><span class="p">:</span> <span class="s">"2022-05-01"</span>
+ <span class="mi">6</span><span class="o">|</span>             <span class="p">},</span>
+ <span class="mi">7</span><span class="o">|</span>         <span class="s">"03"</span><span class="p">:</span> <span class="p">{</span>
+ <span class="mi">8</span><span class="o">|</span>             <span class="s">"06"</span><span class="p">:</span> <span class="s">"2022-03-06"</span><span class="p">,</span>
+ <span class="mi">9</span><span class="o">|</span>             <span class="s">"02"</span><span class="p">:</span> <span class="s">"2022-03-02"</span>
+<span class="mi">10</span><span class="o">|</span>             <span class="p">},</span>
+<span class="mi">11</span><span class="o">|</span>     <span class="p">},</span>
+<span class="mi">12</span><span class="o">|</span>     <span class="s">"1990"</span><span class="p">:</span> <span class="p">{</span>
+<span class="mi">13</span><span class="o">|</span>         <span class="s">"06"</span><span class="p">:</span> <span class="p">{</span>
+<span class="mi">14</span><span class="o">|</span>             <span class="s">"02"</span><span class="p">:</span> <span class="s">"1999-06-02"</span><span class="p">,</span>
+<span class="mi">15</span><span class="o">|</span>             <span class="s">"01"</span><span class="p">:</span> <span class="s">"1999-06-01"</span>
+<span class="mi">16</span><span class="o">|</span>             <span class="p">},</span>
+<span class="mi">17</span><span class="o">|</span>         <span class="s">"02"</span><span class="p">:</span> <span class="p">{</span>
+<span class="mi">18</span><span class="o">|</span>             <span class="s">"06"</span><span class="p">:</span> <span class="s">"1999-02-06"</span><span class="p">,</span>
+<span class="mi">19</span><span class="o">|</span>             <span class="s">"02"</span><span class="p">:</span> <span class="s">"1999-02-02"</span>
+<span class="mi">20</span><span class="o">|</span>             <span class="p">},</span>
+<span class="mi">21</span><span class="o">|</span>     <span class="p">}</span>
+<span class="mi">22</span><span class="o">|</span> <span class="p">}</span>
+</code></pre></div></div>
+
+
+                <div class="tags">
+                        Tags:
+                        
+                        <span class="tag">
+                                <a href="/tags/##lang-en">#lang-en</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##openzfs">#openzfs</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##prune">#prune</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##python3">#python3</a>
+                        </span>
+                        
+                        <span class="tag">
+                                <a href="/tags/##zfs">#zfs</a>
+                        </span>
+                        
+                </div>
+
+                <p class="date">Last update: 2023-02-01</p>
+        </div>
+
+        <div class="pagenavigation">
+                
+                <span class="prev">No previous post</span>
+                
+                
+                <a class="next" href="/2023-04-08/Getreidesorten.html">Getreidesorten &raquo;</a>
+                
+        </div>
+</div>
+    </div>
+    <div id="footer">Randomate Blog | v. 1.5.1 | 1715892321</div>
+</body>
+
+</html>
