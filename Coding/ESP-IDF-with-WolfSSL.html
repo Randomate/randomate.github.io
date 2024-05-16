@@ -8,22 +8,28 @@
       
       
       
+        <link rel="canonical" href="http://blog.randomate.dev/Coding/ESP-IDF-with-WolfSSL.html">
       
       
+        <link rel="prev" href="../tags.html">
       
-      <link rel="icon" href="/assets/images/favicon.png">
+      
+        <link rel="next" href="../Haushalt/Getreidesorten.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
-        <title>Randomate Documentation</title>
+        <title>ESP-IDF with WolfSSL - Randomate Documentation</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -69,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#how-to-install" class="md-skip">
+          Zum Inhalt
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -81,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
-    <a href="/index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -101,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              ESP-IDF with WolfSSL
             
           </span>
         </div>
@@ -216,7 +227,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+    <a href="../index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -234,7 +245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -254,7 +265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -271,17 +282,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -295,7 +308,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Coding
@@ -306,10 +319,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    ESP-IDF with WolfSSL
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ESP-IDF-with-WolfSSL.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -318,6 +349,42 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to install
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example code
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -372,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Getreidesorten.html" class="md-nav__link">
+      <a href="../Haushalt/Getreidesorten.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -393,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
+      <a href="../Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -414,7 +481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
+      <a href="../Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -477,7 +544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
+      <a href="../Linux/Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -498,7 +565,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Commands-Collection.html" class="md-nav__link">
+      <a href="../Linux/Commands-Collection.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -519,7 +586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
+      <a href="../Linux/Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -540,7 +607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/Firefox-and-SelfCA.html" class="md-nav__link">
+      <a href="../Linux/Firefox-and-SelfCA.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -561,7 +628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/OpenZFS-with-HSM-encryption.html" class="md-nav__link">
+      <a href="../Linux/OpenZFS-with-HSM-encryption.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -582,7 +649,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Linux/ZFS-clone-snapshots.html" class="md-nav__link">
+      <a href="../Linux/ZFS-clone-snapshots.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -645,7 +712,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
+      <a href="../Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -678,8 +745,222 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
+  
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../tags.html#decryption" class="md-tag">decryption</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#encryption" class="md-tag">encryption</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#esp-idf" class="md-tag">esp-idf</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#esp32" class="md-tag">esp32</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#espressif" class="md-tag">espressif</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#lang-en" class="md-tag">lang-en</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#wolfcrypt" class="md-tag">wolfcrypt</a>
+    
+  
+    
+    
+    
+      <a href="../tags.html#wolfssl" class="md-tag">wolfssl</a>
+    
+  
+</nav>
 
+
+
+  <h1>ESP-IDF with WolfSSL</h1>
+
+<p>Using WolfSSL with ESP32 in ESP-IDF is not magic. In this post I will show you how to setup WolfSSL with ESP-IDF and provide an example for encryption and decryption. Also with splitted bytes[] input.</p>
+<h2 id="how-to-install">How to install</h2>
+<p>There are two options to install WolfSSL for ESP-IDF:</p>
+<ol>
+<li>Install WolfSSL for ESP-IDF:<br />
+https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/esp_tls.html#how-to-use-wolfssl-with-esp-idf<ol>
+<li>Clone repository</li>
+<li>Execute setup.sh from <code>IDE/Espressif/ESP-IDF</code></li>
+<li>Modify <code>EXTRA_COMPONENT_DIRS</code> in <code>CMakeLists.txt</code> with the component path. For example <code>${ESP_INSTALL}/esp/esp-idf/components/wolfssl/</code></li>
+</ol>
+</li>
+<li>Install WolfSSL for ESP-IDF from WolfSSL:<br />
+https://github.com/wolfSSL/wolfssl/tree/master/IDE/Espressif/ESP-IDF<ol>
+<li>Clone repository</li>
+<li>Execute setup.sh from <code>IDE/Espressif/ESP-IDF</code></li>
+<li>Modify <code>EXTRA_COMPONENT_DIRS</code> in <code>CMakeLists.txt</code> with the component path. For example <code>${ESP_INSTALL}/esp/esp-idf/components/wolfssl/</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="example-code">Example code</h2>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;inttypes.h&gt;
+#include &lt;wolfssl/wolfcrypt/aes.h&gt;
+
+void app_main(void)
+{
+
+    Aes enc;
+    Aes dec;
+
+    /**
+     * Plain: 72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72
+     * Cipher: 85:82:76:E5:5C:30:E1:F4:90:07:C8:72:A6:9E:3C:63:CD:02:B5:15:F3:2E:2A:47:E4:B6:06:B4:78:9B:28:E8
+    */
+
+    // IMPORTANT DO NOT USE THIS INSECURE KEY AN IV!
+    const byte key_b[] = {  0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                            0x00, 0x00, 0x00, 0x00  };
+    const byte iv_b[]  = {  0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                            0x00, 0x00, 0x00, 0x00, 0x00, 0x00  };
+
+    byte plain_b[32]   =  {  0x72, 0x73, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72,
+                             0x72, 0x74, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72,
+                             0x72, 0x75, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72,
+                             0x72, 0x76  };
+
+    byte cipher_b[32];
+    byte decrypted_b[32];
+
+    byte plain11_b[16];
+    byte plain12_b[16];
+    byte cipher11_b[16];
+    byte cipher12_b[16];
+    byte decrypted11_b[16];
+    byte decrypted12_b[16];
+
+    wc_AesSetKey(&amp;enc, key_b, sizeof(key_b), iv_b, AES_ENCRYPTION);
+    wc_AesCbcEncrypt(&amp;enc, cipher_b, plain_b, sizeof(plain_b));
+
+    memcpy(plain11_b, plain_b, sizeof(plain_b[0])*(16));
+    memcpy(plain12_b, &amp;plain_b[16], sizeof(plain_b[0])*(16));
+
+    wc_AesSetKey(&amp;enc, key_b, sizeof(key_b), iv_b, AES_ENCRYPTION);
+    wc_AesCbcEncrypt(&amp;enc, cipher11_b, plain11_b, sizeof(plain11_b));
+    wc_AesCbcEncrypt(&amp;enc, cipher12_b, plain12_b, sizeof(plain12_b));
+
+    wc_AesSetKey(&amp;dec, key_b, sizeof(key_b), iv_b, AES_DECRYPTION);
+    wc_AesCbcDecrypt(&amp;dec, decrypted_b, cipher_b, sizeof(cipher_b));
+
+    wc_AesSetKey(&amp;dec, key_b, sizeof(key_b), iv_b, AES_DECRYPTION);
+    wc_AesCbcDecrypt(&amp;dec, decrypted11_b, cipher11_b, sizeof(cipher11_b));
+    wc_AesCbcDecrypt(&amp;dec, decrypted12_b, cipher12_b, sizeof(cipher12_b));
+
+    int i;
+    printf(&quot;Plain         : &quot;);
+    for (i = 0; i &lt; sizeof(plain_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, plain_b[i]);
+    }
+    printf(&quot;\n&quot;);
+
+    printf(&quot;Plain1112     : &quot;);
+    for (i = 0; i &lt; sizeof(plain11_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, plain11_b[i]);
+    }
+    printf(&quot;|&quot;);
+    for (i = 0; i &lt; sizeof(plain12_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, plain12_b[i]);
+    }
+    printf(&quot;\n&quot;);
+
+    printf(&quot;Cipher        : &quot;);
+    for (i = 0; i &lt; sizeof(cipher_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, cipher_b[i]);
+    }
+    printf(&quot;\n&quot;);
+
+    printf(&quot;Cipher1112    : &quot;);
+    for (i = 0; i &lt; sizeof(cipher11_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, cipher11_b[i]);
+    }
+    printf(&quot;|&quot;);
+    for (i = 0; i &lt; sizeof(cipher12_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, cipher12_b[i]);
+    }
+    printf(&quot;\n&quot;);
+
+    printf(&quot;Decrypted     : &quot;);
+    for (i = 0; i &lt; sizeof(decrypted_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, decrypted_b[i]);
+    }
+    printf(&quot;\n&quot;);
+
+    printf(&quot;Decrypted1112 : &quot;);
+    for (i = 0; i &lt; sizeof(decrypted11_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, decrypted11_b[i]);
+    }
+    printf(&quot;|&quot;);
+    for (i = 0; i &lt; sizeof(decrypted12_b); i++)
+    {
+        if (i &gt; 0) printf(&quot;:&quot;);
+        printf(&quot;%02X&quot;, decrypted12_b[i]);
+    }
+    printf(&quot;\n&quot;);
+}
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -713,10 +994,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "/assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
-      <script src="/assets/javascripts/bundle.ebd0bdb7.min.js"></script>
+      <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
     
   </body>
