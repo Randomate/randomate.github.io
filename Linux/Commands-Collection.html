@@ -598,6 +598,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rename-file-based-on-modified-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rename File based on Modified Date
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#remove-drm-from-pdf" class="md-nav__link">
     <span class="md-ellipsis">
       Remove DRM from PDF
@@ -1048,6 +1057,12 @@ $ /usr/bin/pdftk FinalDocument.pdf cat 1-r2 output FinalDocumentWithoutLast.pdf
 </code></pre>
 <h2 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h2>
 <pre><code class="language-bash">$ exiftool -d '%Y-%m-%d_%H%M%S.%%e' '-filename&lt;CreateDate' -v 1 *
+</code></pre>
+<h2 id="rename-file-based-on-modified-date">Rename File based on Modified Date</h2>
+<pre><code class="language-bash">for f in *.jpg
+do
+    mv -n &quot;$f&quot; &quot;$(date -r &quot;$f&quot; +&quot;%Y-%m-%d_%H%M%S&quot;).jpg&quot;
+done
 </code></pre>
 <h2 id="remove-drm-from-pdf">Remove DRM from PDF</h2>
 <pre><code class="language-bash"># Login to Adobe DRM
