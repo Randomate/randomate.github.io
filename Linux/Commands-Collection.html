@@ -1031,69 +1031,69 @@
 
 <p>Collection of helpful Linux commands.</p>
 <h2 id="list-file-with-leading-line-numbers">List File With Leading Line Numbers</h2>
-<pre><code class="language-bash">$ nl -w2 -s&quot;| &quot; testfile.txt
- 1| This is a test file
- 2| with line break.
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>nl<span class="w"> </span>-w2<span class="w"> </span>-s<span class="s2">&quot;| &quot;</span><span class="w"> </span>testfile.txt
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w"> </span><span class="m">1</span><span class="p">|</span><span class="w"> </span>This<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span><span class="nb">test</span><span class="w"> </span>file
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w"> </span><span class="m">2</span><span class="p">|</span><span class="w"> </span>with<span class="w"> </span>line<span class="w"> </span><span class="k">break</span>.
+</span></code></pre></div>
 <h2 id="fast-search">Fast Search</h2>
-<pre><code class="language-bash">$ fd searchString
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>fd<span class="w"> </span>searchString
+</span></code></pre></div>
 <h2 id="generate-and-read-qr-codes">Generate and Read QR Codes</h2>
-<pre><code class="language-bash"># Generate
-$ echo &quot;some data&quot; | base64 -w 0 | qrencode -l Q -t SVG -o /tmp/qr.svg
-
-# Read
-$ zbarimg -q /tmp/qr.svg | cut -c 9- | base64 -d
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Generate</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some data&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>qrencode<span class="w"> </span>-l<span class="w"> </span>Q<span class="w"> </span>-t<span class="w"> </span>SVG<span class="w"> </span>-o<span class="w"> </span>/tmp/qr.svg
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Read</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>$<span class="w"> </span>zbarimg<span class="w"> </span>-q<span class="w"> </span>/tmp/qr.svg<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c<span class="w"> </span><span class="m">9</span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+</span></code></pre></div>
 <h2 id="generate-duplex-pdf-from-single-page-scan">Generate Duplex PDF from Single Page Scan</h2>
-<pre><code class="language-bash"># Change order of even pages
-$ /usr/bin/pdftk EvenPages.pdf cat end-1 output BackWardsEvenPages.pdf
-
-# Merge even and odd pages
-$ /usr/bin/pdftk ODD=OddPages.pdf EVEN=backWardsEvenPages.pdf shuffle ODD EVEN output FinalDocument.pdf
-
-# Remove last blank page, if necessary
-$ /usr/bin/pdftk FinalDocument.pdf cat 1-r2 output FinalDocumentWithoutLast.pdf
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Change order of even pages</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>/usr/bin/pdftk<span class="w"> </span>EvenPages.pdf<span class="w"> </span>cat<span class="w"> </span>end-1<span class="w"> </span>output<span class="w"> </span>BackWardsEvenPages.pdf
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Merge even and odd pages</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>$<span class="w"> </span>/usr/bin/pdftk<span class="w"> </span><span class="nv">ODD</span><span class="o">=</span>OddPages.pdf<span class="w"> </span><span class="nv">EVEN</span><span class="o">=</span>backWardsEvenPages.pdf<span class="w"> </span>shuffle<span class="w"> </span>ODD<span class="w"> </span>EVEN<span class="w"> </span>output<span class="w"> </span>FinalDocument.pdf
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Remove last blank page, if necessary</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>$<span class="w"> </span>/usr/bin/pdftk<span class="w"> </span>FinalDocument.pdf<span class="w"> </span>cat<span class="w"> </span><span class="m">1</span>-r2<span class="w"> </span>output<span class="w"> </span>FinalDocumentWithoutLast.pdf
+</span></code></pre></div>
 <h2 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h2>
-<pre><code class="language-bash">$ exiftool -d '%Y-%m-%d_%H%M%S.%%e' '-filename&lt;CreateDate' -v 1 *
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;CreateDate&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
+</span></code></pre></div>
 <h2 id="rename-file-based-on-modified-date">Rename File based on Modified Date</h2>
-<pre><code class="language-bash">for f in *.jpg
-do
-    mv -n &quot;$f&quot; &quot;$(date -r &quot;$f&quot; +&quot;%Y-%m-%d_%H%M%S&quot;).jpg&quot;
-done
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.jpg
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">do</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>mv<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>date<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span>+<span class="s2">&quot;%Y-%m-%d_%H%M%S&quot;</span><span class="k">)</span><span class="s2">.jpg&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">done</span>
+</span></code></pre></div>
 <h2 id="remove-drm-from-pdf">Remove DRM from PDF</h2>
-<pre><code class="language-bash"># Login to Adobe DRM
-$ adept_activate --username ADOBE_LOGIN_USERNAME --password ADOBE_LOGIN_PASSWORD
-
-# Download PDF from ASCM File
-$ acsmdownloader --acsm-file downloadfile.ascm --output-file outputfile
-
-# Remove DRM
-$ adept_remove TMPOUT
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Login to Adobe DRM</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>adept_activate<span class="w"> </span>--username<span class="w"> </span>ADOBE_LOGIN_USERNAME<span class="w"> </span>--password<span class="w"> </span>ADOBE_LOGIN_PASSWORD
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Download PDF from ASCM File</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>$<span class="w"> </span>acsmdownloader<span class="w"> </span>--acsm-file<span class="w"> </span>downloadfile.ascm<span class="w"> </span>--output-file<span class="w"> </span>outputfile
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Remove DRM</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>$<span class="w"> </span>adept_remove<span class="w"> </span>TMPOUT
+</span></code></pre></div>
 <h2 id="rename-file-in-folder-to-lowercase">Rename File in Folder to Lowercase</h2>
-<pre><code class="language-bash">$ find . -type f -exec perl-rename -v 'y/A-Z/a-z/' {} \;
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-exec<span class="w"> </span>perl-rename<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;y/A-Z/a-z/&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+</span></code></pre></div>
 <h2 id="convert-avi-to-mp4">Convert AVI to mp4</h2>
-<pre><code class="language-bash">$ ffmpeg -i input.avi -b 800k output.mp4
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-b<span class="w"> </span>800k<span class="w"> </span>output.mp4
+</span></code></pre></div>
 <h2 id="convert-markdown-to-pdf">Convert Markdown to PDF</h2>
-<pre><code class="language-bash"># Set alias
-$ alias pandocker=&quot;docker run --rm --volume &quot;`pwd`:/data&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;
-
-#Use the command
-$ pandocker in.md -o out.pdf
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Set alias</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>$<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">&quot;docker run --rm --volume &quot;</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">#Use the command</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>$<span class="w"> </span>pandocker<span class="w"> </span><span class="k">in</span>.md<span class="w"> </span>-o<span class="w"> </span>out.pdf
+</span></code></pre></div>
 <h2 id="clear-log-journal">Clear log journal</h2>
-<pre><code class="language-bash">$ sudo journalctl --rotate --vacuum-time=1s
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>--rotate<span class="w"> </span>--vacuum-time<span class="o">=</span>1s
+</span></code></pre></div>
 <h1 id="zfs">ZFS</h1>
 <h2 id="destroy-all-snapshots-from-dataset">Destroy all Snapshots from Dataset</h2>
-<pre><code class="language-bash">$ zfs list -H -o name -t snapshot &lt;POOL/DATASET&gt;| xargs -n1 sudo zfs destroy
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy
+</span></code></pre></div>
 
 
 
@@ -1143,7 +1143,7 @@ $ pandocker in.md -o out.pdf
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
       <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>

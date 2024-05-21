@@ -798,27 +798,27 @@
   <h1>ZFS Clone Snapshots</h1>
 
 <p>The following script clones a zfs dataset with all available snapshots. The variable <code>source=${1}</code> defines the source dataset, <code>dest=${2}</code> defines the destination dataset. The destination dataset must be created in advanced manually.</p>
-<pre><code class="language-bash"> 1| #!/bin/bash
- 2| 
- 3| source=${1}
- 4| source_mountpoint=$(/usr/sbin/zfs get mountpoint -o value -H ${source})
- 5| source_snappath=${source_mountpoint}/.zfs/snapshot
- 6| dest=${2}
- 7| dest_mountpoint=$(/usr/sbin/zfs get mountpoint -o value -H ${dest})
- 8| 
- 9| snaps=(${source_snappath}/*)
-10| 
-11| IFS=$'\n' snaps=($(sort &lt;&lt;&lt;&quot;${snaps[*]}&quot;))
-12| unset IFS
-13| 
-14| for f in &quot;${snaps[@]}&quot;; do
-15|    echo &quot;Copy $f&quot;
-16|    snapname=$(basename &quot;$f&quot;)
-17|    /usr/bin/rsync -a --progress --delete ${f}/ ${dest_mountpoint}
-18|    /usr/sbin/zfs snapshot ${dest}@${snapname}
-19|    echo &quot;-------------------------------------------------&quot;
-20| done
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w"> </span><span class="m">1</span><span class="p">|</span><span class="w"> </span><span class="c1">#!/bin/bash</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w"> </span><span class="m">2</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w"> </span><span class="m">3</span><span class="p">|</span><span class="w"> </span><span class="nv">source</span><span class="o">=</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w"> </span><span class="m">4</span><span class="p">|</span><span class="w"> </span><span class="nv">source_mountpoint</span><span class="o">=</span><span class="k">$(</span>/usr/sbin/zfs<span class="w"> </span>get<span class="w"> </span>mountpoint<span class="w"> </span>-o<span class="w"> </span>value<span class="w"> </span>-H<span class="w"> </span><span class="si">${</span><span class="nv">source</span><span class="si">}</span><span class="k">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w"> </span><span class="m">5</span><span class="p">|</span><span class="w"> </span><span class="nv">source_snappath</span><span class="o">=</span><span class="si">${</span><span class="nv">source_mountpoint</span><span class="si">}</span>/.zfs/snapshot
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w"> </span><span class="m">6</span><span class="p">|</span><span class="w"> </span><span class="nv">dest</span><span class="o">=</span><span class="si">${</span><span class="nv">2</span><span class="si">}</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w"> </span><span class="m">7</span><span class="p">|</span><span class="w"> </span><span class="nv">dest_mountpoint</span><span class="o">=</span><span class="k">$(</span>/usr/sbin/zfs<span class="w"> </span>get<span class="w"> </span>mountpoint<span class="w"> </span>-o<span class="w"> </span>value<span class="w"> </span>-H<span class="w"> </span><span class="si">${</span><span class="nv">dest</span><span class="si">}</span><span class="k">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w"> </span><span class="m">8</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w"> </span><span class="m">9</span><span class="p">|</span><span class="w"> </span><span class="nv">snaps</span><span class="o">=(</span><span class="si">${</span><span class="nv">source_snappath</span><span class="si">}</span>/*<span class="o">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="m">10</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="m">11</span><span class="p">|</span><span class="w"> </span><span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span><span class="w"> </span><span class="nv">snaps</span><span class="o">=(</span><span class="k">$(</span>sort<span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">snaps</span><span class="p">[*]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="o">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="m">12</span><span class="p">|</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>IFS
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="m">13</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="m">14</span><span class="p">|</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">snaps</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="m">15</span><span class="p">|</span><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Copy </span><span class="nv">$f</span><span class="s2">&quot;</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="m">16</span><span class="p">|</span><span class="w">    </span><span class="nv">snapname</span><span class="o">=</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="k">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="m">17</span><span class="p">|</span><span class="w">    </span>/usr/bin/rsync<span class="w"> </span>-a<span class="w"> </span>--progress<span class="w"> </span>--delete<span class="w"> </span><span class="si">${</span><span class="nv">f</span><span class="si">}</span>/<span class="w"> </span><span class="si">${</span><span class="nv">dest_mountpoint</span><span class="si">}</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="m">18</span><span class="p">|</span><span class="w">    </span>/usr/sbin/zfs<span class="w"> </span>snapshot<span class="w"> </span><span class="si">${</span><span class="nv">dest</span><span class="si">}</span>@<span class="si">${</span><span class="nv">snapname</span><span class="si">}</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="m">19</span><span class="p">|</span><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;-------------------------------------------------&quot;</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="m">20</span><span class="p">|</span><span class="w"> </span><span class="k">done</span>
+</span></code></pre></div>
 
 
 
@@ -868,7 +868,7 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
       <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>

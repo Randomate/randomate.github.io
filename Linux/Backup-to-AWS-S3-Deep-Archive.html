@@ -799,67 +799,67 @@
 
 <p>Backup to AWS S3 with storage class <em>Deep Archive</em> is a cheap solution for a disaster backup. The following explanations and configuration is based <code>Ubuntu 20.04.6 LTS</code> and <code>duplicity 1.2.2</code>. Duplicity is installed via <code>snap</code>.</p>
 <p>The script is split in two parts. The secret values like <em>access keys</em> are stored in a <code>.env</code> file. With this, no credentials and keys needs to be stored in the script.</p>
-<pre><code class="language-bash"># .env file
-AWS_ACCESS_KEY_ID=&quot;ENTER-YOUR-AWS_ACCESS_KEY_ID&quot;
-AWS_SECRET_ACCESS_KEY=&quot;ENTER-YOUR-AWS_SECRET_ACCESS_KEY&quot;
-GPG_KEYID=&quot;GPG-KEY-ID&quot;
-
-BUCKET_NAME=&quot;AWS-BUCKET-NAME&quot;
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># .env file</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">&quot;ENTER-YOUR-AWS_ACCESS_KEY_ID&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="s2">&quot;ENTER-YOUR-AWS_SECRET_ACCESS_KEY&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">GPG_KEYID</span><span class="o">=</span><span class="s2">&quot;GPG-KEY-ID&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">BUCKET_NAME</span><span class="o">=</span><span class="s2">&quot;AWS-BUCKET-NAME&quot;</span>
+</span></code></pre></div>
 <p>The variable <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> defines the access values for AWS S3, <code>GPG_KEYID</code> is used to encrypt the backup with a GPG Key. Everything is stored in the bucket, configured in <code>BUCKET_NAME</code>.</p>
-<pre><code class="language-bash"> 1| #!/bin/bash
- 2| 
- 3| if [ $(whoami) != &quot;root&quot; ]; then
- 4|    echo &quot;please execute as root user&quot;
- 5|    exit 5
- 6| fi
- 7| 
- 8| AWS_ACCESS_KEY_ID=&quot;&lt;set me in .env file&gt;&quot;
- 9| AWS_SECRET_ACCESS_KEY=&quot;&lt;set me in .env file&gt;&quot;
-10| GPG_KEYID=&quot;&lt;set me in .env file&gt;&quot;
-11| BUCKET_NAME=&quot;&lt;set me in .env file&gt;&quot;
-12| export $(cat /absolute/path/to/.env | xargs)
-13| 
-14| LOGFOLDER=&quot;/logfolder/dupli_logs&quot;q
-15| 
-16| DATESTR=`date +%Y-%m-%d_%H%M`
-17| 
-18| backup_to_duplicity() {
-19| 
-20|    SOURCE_FOLDER=${1}
-21|    DEST_FOLDER=${2}
-22| 
-23|    LOG_ERR=&quot;${LOGFOLDER}/dupli.${DEST_FOLDER}.${DATESTR}.err.log&quot;
-24|    LOG_STD=&quot;${LOGFOLDER}/dupli.${DEST_FOLDER}.${DATESTR}.std.log&quot;
-25| 
-26| 
-27|    echo &quot;BACKUP ${SOURCE_FOLDER}&quot; | tee -a ${LOG_ERR} ${LOG_STD}
-28|    date | tee -a ${LOG_ERR} ${LOG_STD}
-29| 
-30| 
-31|    dupl_cmd=&quot;/snap/bin/duplicity --full-if-older-than 180D \
-32|       --encrypt-key=${GPG_KEYID} \
-33|       --progress \
-34|       --s3-use-deep-archive \
-35|       --s3-use-multiprocessing \
-36|       --volsize 700 \
-37|       ${SOURCE_FOLDER} \
-38|       boto+s3://${BUCKET_NAME}/${DEST_FOLDER}/ \
-39|       2&gt;&gt; ${LOG_ERR} 1&gt;&gt; ${LOG_STD}&quot;
-40| 
-41|    echo &quot;${dupl_cmd}&quot;
-42|    bash -c &quot;AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} ${dupl_cmd}&quot;
-43| 
-44| }
-45| 
-46| 
-47| 
-48| backup_to_duplicity &quot;/media/my/mounted/folder&quot; &quot;FolderInAWS&quot;
-49| 
-50| 
-51| unset AWS_ACCESS_KEY_ID
-52| unset AWS_SECRET_ACCESS_KEY
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w"> </span><span class="m">1</span><span class="p">|</span><span class="w"> </span><span class="c1">#!/bin/bash</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w"> </span><span class="m">2</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w"> </span><span class="m">3</span><span class="p">|</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="k">$(</span>whoami<span class="k">)</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;root&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w"> </span><span class="m">4</span><span class="p">|</span><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;please execute as root user&quot;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w"> </span><span class="m">5</span><span class="p">|</span><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">5</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w"> </span><span class="m">6</span><span class="p">|</span><span class="w"> </span><span class="k">fi</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w"> </span><span class="m">7</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w"> </span><span class="m">8</span><span class="p">|</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">&quot;&lt;set me in .env file&gt;&quot;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w"> </span><span class="m">9</span><span class="p">|</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="s2">&quot;&lt;set me in .env file&gt;&quot;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="m">10</span><span class="p">|</span><span class="w"> </span><span class="nv">GPG_KEYID</span><span class="o">=</span><span class="s2">&quot;&lt;set me in .env file&gt;&quot;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="m">11</span><span class="p">|</span><span class="w"> </span><span class="nv">BUCKET_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;set me in .env file&gt;&quot;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="m">12</span><span class="p">|</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span>/absolute/path/to/.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="k">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="m">13</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="m">14</span><span class="p">|</span><span class="w"> </span><span class="nv">LOGFOLDER</span><span class="o">=</span><span class="s2">&quot;/logfolder/dupli_logs&quot;</span>q
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="m">15</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="m">16</span><span class="p">|</span><span class="w"> </span><span class="nv">DATESTR</span><span class="o">=</span><span class="sb">`</span>date<span class="w"> </span>+%Y-%m-%d_%H%M<span class="sb">`</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="m">17</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="m">18</span><span class="p">|</span><span class="w"> </span>backup_to_duplicity<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="m">19</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="m">20</span><span class="p">|</span><span class="w">    </span><span class="nv">SOURCE_FOLDER</span><span class="o">=</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="m">21</span><span class="p">|</span><span class="w">    </span><span class="nv">DEST_FOLDER</span><span class="o">=</span><span class="si">${</span><span class="nv">2</span><span class="si">}</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="m">22</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="m">23</span><span class="p">|</span><span class="w">    </span><span class="nv">LOG_ERR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LOGFOLDER</span><span class="si">}</span><span class="s2">/dupli.</span><span class="si">${</span><span class="nv">DEST_FOLDER</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">DATESTR</span><span class="si">}</span><span class="s2">.err.log&quot;</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="m">24</span><span class="p">|</span><span class="w">    </span><span class="nv">LOG_STD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LOGFOLDER</span><span class="si">}</span><span class="s2">/dupli.</span><span class="si">${</span><span class="nv">DEST_FOLDER</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">DATESTR</span><span class="si">}</span><span class="s2">.std.log&quot;</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="m">25</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="m">26</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="m">27</span><span class="p">|</span><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;BACKUP </span><span class="si">${</span><span class="nv">SOURCE_FOLDER</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="si">${</span><span class="nv">LOG_ERR</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">LOG_STD</span><span class="si">}</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="m">28</span><span class="p">|</span><span class="w">    </span>date<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="si">${</span><span class="nv">LOG_ERR</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">LOG_STD</span><span class="si">}</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="m">29</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="m">30</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="m">31</span><span class="p">|</span><span class="w">    </span><span class="nv">dupl_cmd</span><span class="o">=</span><span class="s2">&quot;/snap/bin/duplicity --full-if-older-than 180D \</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="s2">32|       --encrypt-key=</span><span class="si">${</span><span class="nv">GPG_KEYID</span><span class="si">}</span><span class="s2"> \</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="s2">33|       --progress \</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="s2">34|       --s3-use-deep-archive \</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="s2">35|       --s3-use-multiprocessing \</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="s2">36|       --volsize 700 \</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="s2">37|       </span><span class="si">${</span><span class="nv">SOURCE_FOLDER</span><span class="si">}</span><span class="s2"> \</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="s2">38|       boto+s3://</span><span class="si">${</span><span class="nv">BUCKET_NAME</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEST_FOLDER</span><span class="si">}</span><span class="s2">/ \</span>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="s2">39|       2&gt;&gt; </span><span class="si">${</span><span class="nv">LOG_ERR</span><span class="si">}</span><span class="s2"> 1&gt;&gt; </span><span class="si">${</span><span class="nv">LOG_STD</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="m">40</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="m">41</span><span class="p">|</span><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">dupl_cmd</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="m">42</span><span class="p">|</span><span class="w">    </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;AWS_ACCESS_KEY_ID=</span><span class="si">${</span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="si">}</span><span class="s2"> AWS_SECRET_ACCESS_KEY=</span><span class="si">${</span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">dupl_cmd</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="m">43</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="m">44</span><span class="p">|</span><span class="w"> </span><span class="o">}</span>
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="m">45</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="m">46</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="m">47</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="m">48</span><span class="p">|</span><span class="w"> </span>backup_to_duplicity<span class="w"> </span><span class="s2">&quot;/media/my/mounted/folder&quot;</span><span class="w"> </span><span class="s2">&quot;FolderInAWS&quot;</span>
+</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="m">49</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="m">50</span><span class="p">|</span><span class="w"> </span>
+</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="m">51</span><span class="p">|</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>AWS_ACCESS_KEY_ID
+</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="m">52</span><span class="p">|</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>AWS_SECRET_ACCESS_KEY
+</span></code></pre></div>
 
 
 
@@ -909,7 +909,7 @@ BUCKET_NAME=&quot;AWS-BUCKET-NAME&quot;
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
       <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>

@@ -886,128 +886,128 @@ https://github.com/wolfSSL/wolfssl/tree/master/IDE/Espressif/ESP-IDF<ol>
 </li>
 </ol>
 <h2 id="example-code">Example code</h2>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;inttypes.h&gt;
-#include &lt;wolfssl/wolfcrypt/aes.h&gt;
-
-void app_main(void)
-{
-
-    Aes enc;
-    Aes dec;
-
-    /**
-     * Plain: 72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72
-     * Cipher: 85:82:76:E5:5C:30:E1:F4:90:07:C8:72:A6:9E:3C:63:CD:02:B5:15:F3:2E:2A:47:E4:B6:06:B4:78:9B:28:E8
-    */
-
-    // IMPORTANT DO NOT USE THIS INSECURE KEY AN IV!
-    const byte key_b[] = {  0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                            0x00, 0x00, 0x00, 0x00  };
-    const byte iv_b[]  = {  0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                            0x00, 0x00, 0x00, 0x00, 0x00, 0x00  };
-
-    byte plain_b[32]   =  {  0x72, 0x73, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72,
-                             0x72, 0x74, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72,
-                             0x72, 0x75, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72, 0x72,
-                             0x72, 0x76  };
-
-    byte cipher_b[32];
-    byte decrypted_b[32];
-
-    byte plain11_b[16];
-    byte plain12_b[16];
-    byte cipher11_b[16];
-    byte cipher12_b[16];
-    byte decrypted11_b[16];
-    byte decrypted12_b[16];
-
-    wc_AesSetKey(&amp;enc, key_b, sizeof(key_b), iv_b, AES_ENCRYPTION);
-    wc_AesCbcEncrypt(&amp;enc, cipher_b, plain_b, sizeof(plain_b));
-
-    memcpy(plain11_b, plain_b, sizeof(plain_b[0])*(16));
-    memcpy(plain12_b, &amp;plain_b[16], sizeof(plain_b[0])*(16));
-
-    wc_AesSetKey(&amp;enc, key_b, sizeof(key_b), iv_b, AES_ENCRYPTION);
-    wc_AesCbcEncrypt(&amp;enc, cipher11_b, plain11_b, sizeof(plain11_b));
-    wc_AesCbcEncrypt(&amp;enc, cipher12_b, plain12_b, sizeof(plain12_b));
-
-    wc_AesSetKey(&amp;dec, key_b, sizeof(key_b), iv_b, AES_DECRYPTION);
-    wc_AesCbcDecrypt(&amp;dec, decrypted_b, cipher_b, sizeof(cipher_b));
-
-    wc_AesSetKey(&amp;dec, key_b, sizeof(key_b), iv_b, AES_DECRYPTION);
-    wc_AesCbcDecrypt(&amp;dec, decrypted11_b, cipher11_b, sizeof(cipher11_b));
-    wc_AesCbcDecrypt(&amp;dec, decrypted12_b, cipher12_b, sizeof(cipher12_b));
-
-    int i;
-    printf(&quot;Plain         : &quot;);
-    for (i = 0; i &lt; sizeof(plain_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, plain_b[i]);
-    }
-    printf(&quot;\n&quot;);
-
-    printf(&quot;Plain1112     : &quot;);
-    for (i = 0; i &lt; sizeof(plain11_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, plain11_b[i]);
-    }
-    printf(&quot;|&quot;);
-    for (i = 0; i &lt; sizeof(plain12_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, plain12_b[i]);
-    }
-    printf(&quot;\n&quot;);
-
-    printf(&quot;Cipher        : &quot;);
-    for (i = 0; i &lt; sizeof(cipher_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, cipher_b[i]);
-    }
-    printf(&quot;\n&quot;);
-
-    printf(&quot;Cipher1112    : &quot;);
-    for (i = 0; i &lt; sizeof(cipher11_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, cipher11_b[i]);
-    }
-    printf(&quot;|&quot;);
-    for (i = 0; i &lt; sizeof(cipher12_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, cipher12_b[i]);
-    }
-    printf(&quot;\n&quot;);
-
-    printf(&quot;Decrypted     : &quot;);
-    for (i = 0; i &lt; sizeof(decrypted_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, decrypted_b[i]);
-    }
-    printf(&quot;\n&quot;);
-
-    printf(&quot;Decrypted1112 : &quot;);
-    for (i = 0; i &lt; sizeof(decrypted11_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, decrypted11_b[i]);
-    }
-    printf(&quot;|&quot;);
-    for (i = 0; i &lt; sizeof(decrypted12_b); i++)
-    {
-        if (i &gt; 0) printf(&quot;:&quot;);
-        printf(&quot;%02X&quot;, decrypted12_b[i]);
-    }
-    printf(&quot;\n&quot;);
-}
-</code></pre>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;inttypes.h&gt;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;wolfssl/wolfcrypt/aes.h&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">app_main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">{</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="n">Aes</span><span class="w"> </span><span class="n">enc</span><span class="p">;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="n">Aes</span><span class="w"> </span><span class="n">dec</span><span class="p">;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="cm">/**</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="cm">     * Plain: 72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72:72</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="cm">     * Cipher: 85:82:76:E5:5C:30:E1:F4:90:07:C8:72:A6:9E:3C:63:CD:02:B5:15:F3:2E:2A:47:E4:B6:06:B4:78:9B:28:E8</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="cm">    */</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="c1">// IMPORTANT DO NOT USE THIS INSECURE KEY AN IV!</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">byte</span><span class="w"> </span><span class="n">key_b</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">                            </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">                            </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="w">  </span><span class="p">};</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">byte</span><span class="w"> </span><span class="n">iv_b</span><span class="p">[]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">                            </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="w">  </span><span class="p">};</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">plain_b</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="w">   </span><span class="o">=</span><span class="w">  </span><span class="p">{</span><span class="w">  </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x73</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">                             </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x74</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">                             </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x75</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">                             </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x76</span><span class="w">  </span><span class="p">};</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">cipher_b</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">decrypted_b</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">plain11_b</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">plain12_b</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">cipher11_b</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">cipher12_b</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">decrypted11_b</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">decrypted12_b</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">    </span><span class="n">wc_AesSetKey</span><span class="p">(</span><span class="o">&amp;</span><span class="n">enc</span><span class="p">,</span><span class="w"> </span><span class="n">key_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">key_b</span><span class="p">),</span><span class="w"> </span><span class="n">iv_b</span><span class="p">,</span><span class="w"> </span><span class="n">AES_ENCRYPTION</span><span class="p">);</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">    </span><span class="n">wc_AesCbcEncrypt</span><span class="p">(</span><span class="o">&amp;</span><span class="n">enc</span><span class="p">,</span><span class="w"> </span><span class="n">cipher_b</span><span class="p">,</span><span class="w"> </span><span class="n">plain_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain_b</span><span class="p">));</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">    </span><span class="n">memcpy</span><span class="p">(</span><span class="n">plain11_b</span><span class="p">,</span><span class="w"> </span><span class="n">plain_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain_b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">    </span><span class="n">memcpy</span><span class="p">(</span><span class="n">plain12_b</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">plain_b</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain_b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">    </span><span class="n">wc_AesSetKey</span><span class="p">(</span><span class="o">&amp;</span><span class="n">enc</span><span class="p">,</span><span class="w"> </span><span class="n">key_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">key_b</span><span class="p">),</span><span class="w"> </span><span class="n">iv_b</span><span class="p">,</span><span class="w"> </span><span class="n">AES_ENCRYPTION</span><span class="p">);</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">    </span><span class="n">wc_AesCbcEncrypt</span><span class="p">(</span><span class="o">&amp;</span><span class="n">enc</span><span class="p">,</span><span class="w"> </span><span class="n">cipher11_b</span><span class="p">,</span><span class="w"> </span><span class="n">plain11_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain11_b</span><span class="p">));</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">    </span><span class="n">wc_AesCbcEncrypt</span><span class="p">(</span><span class="o">&amp;</span><span class="n">enc</span><span class="p">,</span><span class="w"> </span><span class="n">cipher12_b</span><span class="p">,</span><span class="w"> </span><span class="n">plain12_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain12_b</span><span class="p">));</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">    </span><span class="n">wc_AesSetKey</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dec</span><span class="p">,</span><span class="w"> </span><span class="n">key_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">key_b</span><span class="p">),</span><span class="w"> </span><span class="n">iv_b</span><span class="p">,</span><span class="w"> </span><span class="n">AES_DECRYPTION</span><span class="p">);</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">    </span><span class="n">wc_AesCbcDecrypt</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dec</span><span class="p">,</span><span class="w"> </span><span class="n">decrypted_b</span><span class="p">,</span><span class="w"> </span><span class="n">cipher_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cipher_b</span><span class="p">));</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">    </span><span class="n">wc_AesSetKey</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dec</span><span class="p">,</span><span class="w"> </span><span class="n">key_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">key_b</span><span class="p">),</span><span class="w"> </span><span class="n">iv_b</span><span class="p">,</span><span class="w"> </span><span class="n">AES_DECRYPTION</span><span class="p">);</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w">    </span><span class="n">wc_AesCbcDecrypt</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dec</span><span class="p">,</span><span class="w"> </span><span class="n">decrypted11_b</span><span class="p">,</span><span class="w"> </span><span class="n">cipher11_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cipher11_b</span><span class="p">));</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w">    </span><span class="n">wc_AesCbcDecrypt</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dec</span><span class="p">,</span><span class="w"> </span><span class="n">decrypted12_b</span><span class="p">,</span><span class="w"> </span><span class="n">cipher12_b</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cipher12_b</span><span class="p">));</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Plain         : &quot;</span><span class="p">);</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">plain_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Plain1112     : &quot;</span><span class="p">);</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain11_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">plain11_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;|&quot;</span><span class="p">);</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">plain12_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">plain12_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Cipher        : &quot;</span><span class="p">);</span>
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cipher_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cipher_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Cipher1112    : &quot;</span><span class="p">);</span>
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cipher11_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cipher11_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;|&quot;</span><span class="p">);</span>
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cipher12_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96" href="#__codelineno-0-96"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cipher12_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97" href="#__codelineno-0-97"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99" href="#__codelineno-0-99"></a>
+</span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100" href="#__codelineno-0-100"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Decrypted     : &quot;</span><span class="p">);</span>
+</span><span id="__span-0-101"><a id="__codelineno-0-101" name="__codelineno-0-101" href="#__codelineno-0-101"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">decrypted_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-102"><a id="__codelineno-0-102" name="__codelineno-0-102" href="#__codelineno-0-102"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-103"><a id="__codelineno-0-103" name="__codelineno-0-103" href="#__codelineno-0-103"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-104"><a id="__codelineno-0-104" name="__codelineno-0-104" href="#__codelineno-0-104"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">decrypted_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-105"><a id="__codelineno-0-105" name="__codelineno-0-105" href="#__codelineno-0-105"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-106"><a id="__codelineno-0-106" name="__codelineno-0-106" href="#__codelineno-0-106"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-0-107"><a id="__codelineno-0-107" name="__codelineno-0-107" href="#__codelineno-0-107"></a>
+</span><span id="__span-0-108"><a id="__codelineno-0-108" name="__codelineno-0-108" href="#__codelineno-0-108"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Decrypted1112 : &quot;</span><span class="p">);</span>
+</span><span id="__span-0-109"><a id="__codelineno-0-109" name="__codelineno-0-109" href="#__codelineno-0-109"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">decrypted11_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-110"><a id="__codelineno-0-110" name="__codelineno-0-110" href="#__codelineno-0-110"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-111"><a id="__codelineno-0-111" name="__codelineno-0-111" href="#__codelineno-0-111"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-112"><a id="__codelineno-0-112" name="__codelineno-0-112" href="#__codelineno-0-112"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">decrypted11_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-113"><a id="__codelineno-0-113" name="__codelineno-0-113" href="#__codelineno-0-113"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-114"><a id="__codelineno-0-114" name="__codelineno-0-114" href="#__codelineno-0-114"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;|&quot;</span><span class="p">);</span>
+</span><span id="__span-0-115"><a id="__codelineno-0-115" name="__codelineno-0-115" href="#__codelineno-0-115"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">decrypted12_b</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-0-116"><a id="__codelineno-0-116" name="__codelineno-0-116" href="#__codelineno-0-116"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-117"><a id="__codelineno-0-117" name="__codelineno-0-117" href="#__codelineno-0-117"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+</span><span id="__span-0-118"><a id="__codelineno-0-118" name="__codelineno-0-118" href="#__codelineno-0-118"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">decrypted12_b</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-0-119"><a id="__codelineno-0-119" name="__codelineno-0-119" href="#__codelineno-0-119"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-120"><a id="__codelineno-0-120" name="__codelineno-0-120" href="#__codelineno-0-120"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-0-121"><a id="__codelineno-0-121" name="__codelineno-0-121" href="#__codelineno-0-121"></a><span class="p">}</span>
+</span></code></pre></div>
 
 
 
@@ -1057,7 +1057,7 @@ void app_main(void)
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
       <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
