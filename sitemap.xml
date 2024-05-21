@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>http://blog.randomate.dev/contact.html</loc>
+         <lastmod>2024-05-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>http://blog.randomate.dev/Coding/ESP-IDF-with-WolfSSL.html</loc>
          <lastmod>2024-05-21</lastmod>
          <changefreq>daily</changefreq>
