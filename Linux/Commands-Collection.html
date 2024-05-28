@@ -627,6 +627,16 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rename-mass-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rename mass files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rename mass files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#rename-media-files-to-create-date" class="md-nav__link">
     <span class="md-ellipsis">
       Rename Media Files to Create Date
@@ -634,13 +644,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#rename-file-based-on-modified-date" class="md-nav__link">
     <span class="md-ellipsis">
       Rename File based on Modified Date
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -663,6 +678,16 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Convert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#convert-avi-to-mp4" class="md-nav__link">
     <span class="md-ellipsis">
       Convert AVI to mp4
@@ -670,13 +695,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#convert-markdown-to-pdf" class="md-nav__link">
     <span class="md-ellipsis">
       Convert Markdown to PDF
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1067,6 +1097,8 @@
 
 
 
+  <h1>Commands Collection</h1>
+
 <p>Collection of helpful Linux commands.</p>
 <h2 id="list-file-with-leading-line-numbers">List File With Leading Line Numbers</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>nl<span class="w"> </span>-w2<span class="w"> </span>-s<span class="s2">&quot;| &quot;</span><span class="w"> </span>testfile.txt
@@ -1093,10 +1125,11 @@
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Remove last blank page, if necessary</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>$<span class="w"> </span>/usr/bin/pdftk<span class="w"> </span>FinalDocument.pdf<span class="w"> </span>cat<span class="w"> </span><span class="m">1</span>-r2<span class="w"> </span>output<span class="w"> </span>FinalDocumentWithoutLast.pdf
 </span></code></pre></div>
-<h2 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h2>
+<h2 id="rename-mass-files">Rename mass files</h2>
+<h3 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;CreateDate&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
 </span></code></pre></div>
-<h2 id="rename-file-based-on-modified-date">Rename File based on Modified Date</h2>
+<h3 id="rename-file-based-on-modified-date">Rename File based on Modified Date</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.jpg
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">do</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>mv<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>date<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span>+<span class="s2">&quot;%Y-%m-%d_%H%M%S&quot;</span><span class="k">)</span><span class="s2">.jpg&quot;</span>
@@ -1115,10 +1148,11 @@
 <h2 id="rename-file-in-folder-to-lowercase">Rename File in Folder to Lowercase</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-exec<span class="w"> </span>perl-rename<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;y/A-Z/a-z/&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
 </span></code></pre></div>
-<h2 id="convert-avi-to-mp4">Convert AVI to mp4</h2>
+<h2 id="convert">Convert</h2>
+<h3 id="convert-avi-to-mp4">Convert AVI to mp4</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-b<span class="w"> </span>800k<span class="w"> </span>output.mp4
 </span></code></pre></div>
-<h2 id="convert-markdown-to-pdf">Convert Markdown to PDF</h2>
+<h3 id="convert-markdown-to-pdf">Convert Markdown to PDF</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Set alias</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>$<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">&quot;docker run --rm --volume &quot;</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
@@ -1128,9 +1162,9 @@
 <h2 id="clear-log-journal">Clear log journal</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>--rotate<span class="w"> </span>--vacuum-time<span class="o">=</span>1s
 </span></code></pre></div>
-<h1 id="zfs">ZFS</h1>
-<h2 id="destroy-all-snapshots-from-dataset">Destroy all Snapshots from Dataset</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
+<h2 id="zfs">ZFS</h2>
+<h3 id="destroy-all-snapshots-from-dataset">Destroy all Snapshots from Dataset</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
 </span></code></pre></div>
 
 
@@ -1164,7 +1198,7 @@
                 Made with
                 <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
                   Material for MkDocs
-                </a> - 2024-05-28 18:21:14.092334+00:00
+                </a> - 2024-05-28 18:26:12.001436+00:00
             </div>
         </div>
     </div>
