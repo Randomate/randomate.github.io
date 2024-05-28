@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../fav.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
     
     
       
@@ -1110,7 +1110,7 @@
 </span></code></pre></div>
 <h1 id="zfs">ZFS</h1>
 <h2 id="destroy-all-snapshots-from-dataset">Destroy all Snapshots from Dataset</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
 </span></code></pre></div>
 
 
@@ -1144,7 +1144,7 @@
                 Made with
                 <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
                   Material for MkDocs
-                </a> - 2024-05-21 17:14:17.697909+00:00
+                </a> - 2024-05-28 18:13:05.967508+00:00
             </div>
         </div>
     </div>
@@ -1159,7 +1159,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
+      <script src="../assets/javascripts/bundle.081f42fc.min.js"></script>
       
     
   </body>
