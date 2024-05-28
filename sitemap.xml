@@ -2,142 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://blog.randomate.dev/index.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/contact.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/link-collection.html</loc>
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
+         <lastmod>2024-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Coding/ESP-IDF-with-WolfSSL.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Haushalt/Getreidesorten.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Haushalt/Photovoltaik-Uebersicht.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Haushalt/Rezept-Knaeckebrot.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Linux/Backup-to-AWS-S3-Deep-Archive.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Linux/Commands-Collection.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Linux/Delete-Old-ZFS-Snapshots.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Linux/Firefox-and-SelfCA.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Linux/OpenZFS-with-HSM-encryption.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Linux/ZFS-clone-snapshots.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/Windows/Commands-Collection.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://blog.randomate.dev/tags.html</loc>
-<<<<<<< HEAD
          <lastmod>2024-05-28</lastmod>
-=======
-         <lastmod>2024-05-26</lastmod>
->>>>>>> 13cc4bebd1b0d387d53c06301512d33f17dd4436
          <changefreq>daily</changefreq>
     </url>
 </urlset>
