@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../fav.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
@@ -1356,61 +1356,63 @@
 Download with multiple audio tracks
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>yt-dlp<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;AUDIO_ID_1+AUDIO_ID_2+AUDIO_ID_3+VIDEO_ID&quot;</span><span class="w"> </span>--audio-multistreams<span class="w"> </span>&lt;URL&gt;<span class="w"> </span>
 </span></code></pre></div></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--user<span class="o">=</span><span class="s2">&quot;1000:1000&quot;</span><span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--volume<span class="o">=</span>.:/downloads:rw<span class="w"> </span>jauderho/yt-dlp:latest<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;bv*+ba/best&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
 <h2 id="rename-mass-files">Rename mass files</h2>
 <h3 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;CreateDate&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;DateTimeOriginal&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;CreateDate&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;DateTimeOriginal&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
 </span></code></pre></div>
 <h3 id="rename-file-based-on-modified-date">Rename File based on Modified Date</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.jpg
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">do</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>mv<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>date<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span>+<span class="s2">&quot;%Y-%m-%d_%H%M%S&quot;</span><span class="k">)</span><span class="s2">.jpg&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">done</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.jpg
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">do</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span>mv<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>date<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span>+<span class="s2">&quot;%Y-%m-%d_%H%M%S&quot;</span><span class="k">)</span><span class="s2">.jpg&quot;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">done</span>
 </span></code></pre></div>
 <h3 id="copy-metadata-media">Copy Metadata Media</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-TagsFromFile<span class="w"> </span>source.mp4<span class="w"> </span>-all:all<span class="w"> </span>-overwrite_original<span class="w"> </span>destination.mp4
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-TagsFromFile<span class="w"> </span>source.mp4<span class="w"> </span>-all:all<span class="w"> </span>-overwrite_original<span class="w"> </span>destination.mp4
 </span></code></pre></div>
 <h3 id="geotag-pictures">Geotag Pictures</h3>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-geotag<span class="o">=</span>geolocation.gpx<span class="w"> </span>-geosync<span class="o">=</span>-1<span class="w"> </span>./photos/
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-geotag<span class="o">=</span>geolocation.gpx<span class="w"> </span>-geosync<span class="o">=</span>-1<span class="w"> </span>./photos/
 </span></code></pre></div>
 <code>-geosync</code> defines offset in hours</p>
 <h2 id="create-empty-file">Create Empty File</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># create file with size but does not allocate space on disc</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>truncate<span class="w"> </span>-s<span class="w"> </span>1G<span class="w"> </span>foo.file
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># create file with size also llocate space on disc</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>fallocate<span class="w"> </span>-l<span class="w"> </span>1G<span class="w"> </span>foo.file
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># create file with size but does not allocate space on disc</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>truncate<span class="w"> </span>-s<span class="w"> </span>1G<span class="w"> </span>foo.file
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># create file with size also llocate space on disc</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>fallocate<span class="w"> </span>-l<span class="w"> </span>1G<span class="w"> </span>foo.file
 </span></code></pre></div>
 <h2 id="remove-drm-from-pdf">Remove DRM from PDF</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Login to Adobe DRM</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>$<span class="w"> </span>adept_activate<span class="w"> </span>--username<span class="w"> </span>ADOBE_LOGIN_USERNAME<span class="w"> </span>--password<span class="w"> </span>ADOBE_LOGIN_PASSWORD
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Download PDF from ASCM File</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>$<span class="w"> </span>acsmdownloader<span class="w"> </span>--acsm-file<span class="w"> </span>downloadfile.ascm<span class="w"> </span>--output-file<span class="w"> </span>outputfile
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># Remove DRM</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>$<span class="w"> </span>adept_remove<span class="w"> </span>TMPOUT
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Login to Adobe DRM</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>$<span class="w"> </span>adept_activate<span class="w"> </span>--username<span class="w"> </span>ADOBE_LOGIN_USERNAME<span class="w"> </span>--password<span class="w"> </span>ADOBE_LOGIN_PASSWORD
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Download PDF from ASCM File</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>$<span class="w"> </span>acsmdownloader<span class="w"> </span>--acsm-file<span class="w"> </span>downloadfile.ascm<span class="w"> </span>--output-file<span class="w"> </span>outputfile
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Remove DRM</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>$<span class="w"> </span>adept_remove<span class="w"> </span>TMPOUT
 </span></code></pre></div>
 <h2 id="rename-file-in-folder-to-lowercase">Rename File in Folder to Lowercase</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-exec<span class="w"> </span>perl-rename<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;y/A-Z/a-z/&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-exec<span class="w"> </span>perl-rename<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;y/A-Z/a-z/&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
 </span></code></pre></div>
 <h2 id="convert">Convert</h2>
 <h3 id="convert-avi-to-mp4">Convert AVI to mp4</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-b<span class="w"> </span>800k<span class="w"> </span>output.mp4
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-b<span class="w"> </span>800k<span class="w"> </span>output.mp4
 </span></code></pre></div>
 <h3 id="convert-markdown-to-pdf">Convert Markdown to PDF</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Set alias</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>$<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">&quot;docker run --rm --volume &quot;</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1">#Use the command</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>$<span class="w"> </span>pandocker<span class="w"> </span><span class="k">in</span>.md<span class="w"> </span>-o<span class="w"> </span>out.pdf
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Set alias</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>$<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">&quot;docker run --rm --volume &quot;</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1">#Use the command</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>$<span class="w"> </span>pandocker<span class="w"> </span><span class="k">in</span>.md<span class="w"> </span>-o<span class="w"> </span>out.pdf
 </span></code></pre></div>
 <h2 id="clear-log-journal">Clear log journal</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>--rotate<span class="w"> </span>--vacuum-time<span class="o">=</span>1s
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>--rotate<span class="w"> </span>--vacuum-time<span class="o">=</span>1s
 </span></code></pre></div>
 <h2 id="zfs">ZFS</h2>
 <h3 id="destroy-all-snapshots-from-dataset">Destroy all Snapshots from Dataset</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
 </span></code></pre></div>
 
 
@@ -1444,7 +1446,7 @@ Download with multiple audio tracks
                 Made with
                 <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
                   Material for MkDocs
-                </a> - 2025-06-11 12:25:04.789420+00:00
+                </a> - 2025-07-20 20:08:15.368852+00:00
             </div>
         </div>
     </div>
@@ -1461,7 +1463,7 @@ Download with multiple audio tracks
       <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
     
   </body>
