@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../fav.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1018,6 +1018,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#remote-rdp-connection-gnome-shell_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote RDP connection Gnome Shell
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1564,34 +1575,34 @@
 
 <p>Collection of helpful Linux commands.</p>
 <h2 id="list-file-with-leading-line-numbers">List File With Leading Line Numbers</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>nl<span class="w"> </span>-w2<span class="w"> </span>-s<span class="s2">&quot;| &quot;</span><span class="w"> </span>testfile.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nl<span class="w"> </span>-w2<span class="w"> </span>-s<span class="s2">&quot;| &quot;</span><span class="w"> </span>testfile.txt
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w"> </span><span class="m">1</span><span class="p">|</span><span class="w"> </span>This<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span><span class="nb">test</span><span class="w"> </span>file
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w"> </span><span class="m">2</span><span class="p">|</span><span class="w"> </span>with<span class="w"> </span>line<span class="w"> </span><span class="k">break</span>.
 </span></code></pre></div>
 <h2 id="list-group-of-files">List group of files</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F.<span class="w"> </span><span class="s1">&#39;{print $NF}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F.<span class="w"> </span><span class="s1">&#39;{print $NF}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n
 </span></code></pre></div>
 <h2 id="generate-and-read-qr-codes">Generate and Read QR Codes</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Generate</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some data&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>qrencode<span class="w"> </span>-l<span class="w"> </span>Q<span class="w"> </span>-t<span class="w"> </span>SVG<span class="w"> </span>-o<span class="w"> </span>/tmp/qr.svg
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some data&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>qrencode<span class="w"> </span>-l<span class="w"> </span>Q<span class="w"> </span>-t<span class="w"> </span>SVG<span class="w"> </span>-o<span class="w"> </span>/tmp/qr.svg
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Read</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>$<span class="w"> </span>zbarimg<span class="w"> </span>-q<span class="w"> </span>/tmp/qr.svg<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c<span class="w"> </span><span class="m">9</span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>zbarimg<span class="w"> </span>-q<span class="w"> </span>/tmp/qr.svg<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c<span class="w"> </span><span class="m">9</span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
 </span></code></pre></div>
 <h2 id="generate-duplex-pdf-from-single-page-scan">Generate Duplex PDF from Single Page Scan</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Change order of even pages</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>/usr/bin/pdftk<span class="w"> </span>EvenPages.pdf<span class="w"> </span>cat<span class="w"> </span>end-1<span class="w"> </span>output<span class="w"> </span>BackWardsEvenPages.pdf
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>/usr/bin/pdftk<span class="w"> </span>EvenPages.pdf<span class="w"> </span>cat<span class="w"> </span>end-1<span class="w"> </span>output<span class="w"> </span>BackWardsEvenPages.pdf
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Merge even and odd pages</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>$<span class="w"> </span>/usr/bin/pdftk<span class="w"> </span><span class="nv">ODD</span><span class="o">=</span>OddPages.pdf<span class="w"> </span><span class="nv">EVEN</span><span class="o">=</span>backWardsEvenPages.pdf<span class="w"> </span>shuffle<span class="w"> </span>ODD<span class="w"> </span>EVEN<span class="w"> </span>output<span class="w"> </span>FinalDocument.pdf
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>/usr/bin/pdftk<span class="w"> </span><span class="nv">ODD</span><span class="o">=</span>OddPages.pdf<span class="w"> </span><span class="nv">EVEN</span><span class="o">=</span>backWardsEvenPages.pdf<span class="w"> </span>shuffle<span class="w"> </span>ODD<span class="w"> </span>EVEN<span class="w"> </span>output<span class="w"> </span>FinalDocument.pdf
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Remove last blank page, if necessary</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>$<span class="w"> </span>/usr/bin/pdftk<span class="w"> </span>FinalDocument.pdf<span class="w"> </span>cat<span class="w"> </span><span class="m">1</span>-r2<span class="w"> </span>output<span class="w"> </span>FinalDocumentWithoutLast.pdf
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>/usr/bin/pdftk<span class="w"> </span>FinalDocument.pdf<span class="w"> </span>cat<span class="w"> </span><span class="m">1</span>-r2<span class="w"> </span>output<span class="w"> </span>FinalDocumentWithoutLast.pdf
 </span></code></pre></div>
 <h2 id="media-files">Media Files</h2>
 <h3 id="download-videos">Download Videos</h3>
 <p>Provide a selection of possible variations of audio and video format.
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>yt-dlp<span class="w"> </span>-f-<span class="w"> </span>&lt;URL&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>yt-dlp<span class="w"> </span>-f-<span class="w"> </span>&lt;URL&gt;
 </span></code></pre></div>
 Download with multiple audio tracks
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>yt-dlp<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;AUDIO_ID_1+AUDIO_ID_2+AUDIO_ID_3+VIDEO_ID&quot;</span><span class="w"> </span>--audio-multistreams<span class="w"> </span>&lt;URL&gt;<span class="w"> </span>
@@ -1600,8 +1611,8 @@ Download with multiple audio tracks
 </span></code></pre></div>
 <h2 id="rename-mass-files">Rename mass files</h2>
 <h3 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;CreateDate&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;DateTimeOriginal&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;CreateDate&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;DateTimeOriginal&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
 </span></code></pre></div>
 <h3 id="rename-file-based-on-modified-date">Rename File based on Modified Date</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.jpg
@@ -1610,10 +1621,10 @@ Download with multiple audio tracks
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">done</span>
 </span></code></pre></div>
 <h3 id="copy-metadata-media">Copy Metadata Media</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-TagsFromFile<span class="w"> </span>source.mp4<span class="w"> </span>-all:all<span class="w"> </span>-overwrite_original<span class="w"> </span>destination.mp4
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>exiftool<span class="w"> </span>-TagsFromFile<span class="w"> </span>source.mp4<span class="w"> </span>-all:all<span class="w"> </span>-overwrite_original<span class="w"> </span>destination.mp4
 </span></code></pre></div>
 <h3 id="geotag-pictures">Geotag Pictures</h3>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>exiftool<span class="w"> </span>-geotag<span class="o">=</span>geolocation.gpx<span class="w"> </span>-geosync<span class="o">=</span>-1<span class="w"> </span>./photos/
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>exiftool<span class="w"> </span>-geotag<span class="o">=</span>geolocation.gpx<span class="w"> </span>-geosync<span class="o">=</span>-1<span class="w"> </span>./photos/
 </span></code></pre></div>
 <code>-geosync</code> defines offset in hours</p>
 <h2 id="create-empty-file">Create Empty File</h2>
@@ -1625,46 +1636,56 @@ Download with multiple audio tracks
 </span></code></pre></div>
 <h2 id="remove-drm-from-pdf">Remove DRM from PDF</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Login to Adobe DRM</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>$<span class="w"> </span>adept_activate<span class="w"> </span>--username<span class="w"> </span>ADOBE_LOGIN_USERNAME<span class="w"> </span>--password<span class="w"> </span>ADOBE_LOGIN_PASSWORD
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>adept_activate<span class="w"> </span>--username<span class="w"> </span>ADOBE_LOGIN_USERNAME<span class="w"> </span>--password<span class="w"> </span>ADOBE_LOGIN_PASSWORD
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Download PDF from ASCM File</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>$<span class="w"> </span>acsmdownloader<span class="w"> </span>--acsm-file<span class="w"> </span>downloadfile.ascm<span class="w"> </span>--output-file<span class="w"> </span>outputfile
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>acsmdownloader<span class="w"> </span>--acsm-file<span class="w"> </span>downloadfile.ascm<span class="w"> </span>--output-file<span class="w"> </span>outputfile
 </span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
 </span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Remove DRM</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>$<span class="w"> </span>adept_remove<span class="w"> </span>TMPOUT
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>adept_remove<span class="w"> </span>TMPOUT
 </span></code></pre></div>
 <h2 id="rename-file-in-folder-to-lowercase">Rename File in Folder to Lowercase</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-exec<span class="w"> </span>perl-rename<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;y/A-Z/a-z/&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-exec<span class="w"> </span>perl-rename<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;y/A-Z/a-z/&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
 </span></code></pre></div>
 <h2 id="convert">Convert</h2>
 <h3 id="convert-avi-to-mp4">Convert AVI to mp4</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$<span class="w"> </span>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-b<span class="w"> </span>800k<span class="w"> </span>output.mp4
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-b<span class="w"> </span>800k<span class="w"> </span>output.mp4
 </span></code></pre></div>
 <h3 id="convert-markdown-to-pdf">Convert Markdown to PDF</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Set alias</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>$<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">&quot;docker run --rm --volume &quot;</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">&quot;docker run --rm --volume &quot;</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
 </span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1">#Use the command</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>$<span class="w"> </span>pandocker<span class="w"> </span><span class="k">in</span>.md<span class="w"> </span>-o<span class="w"> </span>out.pdf
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>pandocker<span class="w"> </span><span class="k">in</span>.md<span class="w"> </span>-o<span class="w"> </span>out.pdf
 </span></code></pre></div>
 <h2 id="clear-log-journal">Clear log journal</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>journalctl<span class="w"> </span>--rotate<span class="w"> </span>--vacuum-time<span class="o">=</span>1s
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>--rotate<span class="w"> </span>--vacuum-time<span class="o">=</span>1s
 </span></code></pre></div>
 <h2 id="zfs">ZFS</h2>
 <h3 id="destroy-all-snapshots-from-dataset">Destroy all Snapshots from Dataset</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>$<span class="w"> </span>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
 </span></code></pre></div>
 <h2 id="remote-rdp-connection-gnome-shell">Remote RDP connection Gnome Shell</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Enable RDP</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>$<span class="w"> </span>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">true</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>$<span class="w"> </span>gsettings<span class="w"> </span>get<span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span>view-only<span class="w"> </span><span class="nb">false</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.vnc<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
 </span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1"># Get Fingerprint of Encryption Certificate</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>$<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w">  </span>~/.local/share/gnome-remote-desktop/certificates/rdp-tls.crt<span class="w"> </span>-noout<span class="w"> </span>-text<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w">  </span>~/.local/share/gnome-remote-desktop/certificates/rdp-tls.crt<span class="w"> </span>-noout<span class="w"> </span>-text<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
 </span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
 </span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c1"># Disable RDP</span>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>$<span class="w"> </span>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">false</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>$<span class="w"> </span>gsettings<span class="w"> </span>get<span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span>view-only<span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">false</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span>view-only<span class="w"> </span><span class="nb">true</span>
+</span></code></pre></div>
+<h2 id="remote-rdp-connection-gnome-shell_1">Remote RDP connection Gnome Shell</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Enable VNC</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.vnc<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.vnc<span class="w"> </span>view-only<span class="w"> </span><span class="nb">false</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>grdctl<span class="w"> </span>vnc<span class="w"> </span>set-password
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="c1"># Disable VNC</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">false</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span>view-only<span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
 
 
@@ -1698,7 +1719,7 @@ Download with multiple audio tracks
                 Made with
                 <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
                   Material for MkDocs
-                </a> - 2025-12-08 11:23:53.337627+00:00
+                </a> - 2026-01-28 21:03:40.370469+00:00
             </div>
         </div>
     </div>
@@ -1713,10 +1734,10 @@ Download with multiple audio tracks
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["search.suggest", "search.highlight", "navigation.tracking", "toc.follow", "toc.integrate", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
