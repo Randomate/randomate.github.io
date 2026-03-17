@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../fav.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
@@ -1649,7 +1649,7 @@ Download with multiple audio tracks
 </span></code></pre></div>
 <h2 id="convert">Convert</h2>
 <h3 id="convert-avi-to-mp4">Convert AVI to mp4</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-b<span class="w"> </span>800k<span class="w"> </span>output.mp4
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-c:v<span class="w"> </span>libx264<span class="w"> </span>-b:v<span class="w"> </span>800k<span class="w"> </span>-c:a<span class="w"> </span>mp3<span class="w"> </span>output.mp4
 </span></code></pre></div>
 <h3 id="convert-markdown-to-pdf">Convert Markdown to PDF</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Set alias</span>
@@ -1719,7 +1719,7 @@ Download with multiple audio tracks
                 Made with
                 <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
                   Material for MkDocs
-                </a> - 2026-01-28 21:03:40.370469+00:00
+                </a> - 2026-03-17 16:11:21.559997+00:00
             </div>
         </div>
     </div>
