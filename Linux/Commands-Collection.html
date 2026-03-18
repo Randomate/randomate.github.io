@@ -1029,6 +1029,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#sip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SIP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#telekom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Telekom
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1687,6 +1715,58 @@ Download with multiple audio tracks
 </span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">false</span>
 </span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span>view-only<span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
+<h2 id="sip">SIP</h2>
+<h3 id="telekom">Telekom</h3>
+<p>Baresip Configuration
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&lt;sip:+49yournumber@tel.t-online.de&gt;;auth_user=anonymous@t-online.de;auth_pass=1234;outbound=&quot;sip:tel.t-online.de;transport=tcp&quot;
+</span></code></pre></div>
+Android Configuration</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIP URI</td>
+<td>sip:+49yournumber@tel.t-online.de</td>
+</tr>
+<tr>
+<td>Nickname</td>
+<td>+49yournumbe</td>
+</tr>
+<tr>
+<td>Display Name</td>
+<td>+49yournumbe</td>
+</tr>
+<tr>
+<td>Authentication Username</td>
+<td>anonymous@t-online.de</td>
+</tr>
+<tr>
+<td>Authentication Password</td>
+<td>random</td>
+</tr>
+<tr>
+<td>SIP URI of Proxy Server</td>
+<td>sip:tel.t-online.de;transport=tcp</td>
+</tr>
+<tr>
+<td>Telephony Provider</td>
+<td>sip:tel.t-online.de;transport=tcp</td>
+</tr>
+<tr>
+<td>Register</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Check Origin</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -1719,7 +1799,7 @@ Download with multiple audio tracks
                 Made with
                 <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
                   Material for MkDocs
-                </a> - 2026-03-17 16:11:21.559997+00:00
+                </a> - 2026-03-18 20:29:19.414867+00:00
             </div>
         </div>
     </div>
