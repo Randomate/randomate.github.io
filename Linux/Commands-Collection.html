@@ -1,0 +1,1954 @@
+
+<!doctype html>
+<html lang="de" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Randomate Documentation">
+      
+      
+      
+        <link rel="canonical" href="https://blog.randomate.dev/Linux/Commands-Collection.html">
+      
+      
+        <link rel="prev" href="./Backup-to-AWS-S3-Deep-Archive.html">
+      
+      
+        <link rel="next" href="./Delete-Old-ZFS-Snapshots.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../fav.png">
+      <meta name="generator" content="zensical-0.0.46">
+    
+    
+      
+        <title>Commands Collection - Randomate Documentation</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.19d3147f.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim" type="text/javascript"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#list-file-with-leading-line-numbers" class="md-skip">
+          Zum Inhalt
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
+    <a href="../index.html" title="Randomate Documentation" class="md-header__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+      
+  <img src="../fav.png" alt="Randomate Documentation">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Randomate Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Commands Collection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Follow system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Follow system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Suche">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Suche">
+  <button type="button" class="md-search__button">
+    Suche
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Randomate Documentation" class="md-nav__button md-logo" aria-label="Randomate Documentation" data-md-component="logo">
+      
+  <img src="../fav.png" alt="Randomate Documentation">
+
+    </a>
+    Randomate Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Start
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Contact
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tags.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tags
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Android
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Android
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Android/Firefox-and-SelfCA.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Firefox And SelfCA
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Coding
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Coding
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Coding/ESP-IDF-with-WolfSSL.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ESP-IDF with WolfSSL
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Haushalt
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Haushalt
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Haushalt/Getreidesorten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Getreidesorten
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Haushalt/Photovoltaik-Uebersicht.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Photovoltaik Übersicht
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Haushalt/Rezept-Knaeckebrot.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Rezept Knäckebrot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Linux
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Linux
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./Backup-to-AWS-S3-Deep-Archive.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Backup To AWS S3 Deep Archive
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Commands Collection
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Commands-Collection.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Commands Collection
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#list-file-with-leading-line-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        List File With Leading Line Numbers
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-group-of-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        List group of files
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-and-read-qr-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Generate and Read QR Codes
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-duplex-pdf-from-single-page-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Generate Duplex PDF from Single Page Scan
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#media-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Media Files
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-videos" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Download Videos
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rename-mass-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rename mass files
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rename mass files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rename-media-files-to-create-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rename Media Files to Create Date
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rename-file-based-on-modified-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rename File based on Modified Date
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy-metadata-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Copy Metadata Media
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geotag-pictures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Geotag Pictures
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-empty-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Create Empty File
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-drm-from-pdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Remove DRM from PDF
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remove DRM from PDF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Manual Process
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drm-pdf-setup-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        DRM PDF Setup with Docker
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rename-file-in-folder-to-lowercase" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rename File in Folder to Lowercase
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Convert
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Convert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#convert-avi-to-mp4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Convert AVI to mp4
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convert-markdown-to-pdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Convert Markdown to PDF
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clear-log-journal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Clear log journal
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ZFS
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ZFS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#destroy-all-snapshots-from-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Destroy all Snapshots from Dataset
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-rdp-connection-gnome-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Remote RDP connection Gnome Shell
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-rdp-connection-gnome-shell_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Remote RDP connection Gnome Shell
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sip" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        SIP
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SIP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#telekom" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Telekom
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./Delete-Old-ZFS-Snapshots.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Delete Old ZFS Snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./Important-Configurations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Important Configurations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./OpenZFS-with-HSM-encryption.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  OpenZFS With HSM Encryption
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./ZFS-clone-snapshots.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ZFS Clone Snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Natur
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Natur
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Natur/Merksaetze-Natur-Tiere-und-Pflanzen.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Merksätze Natur, Tiere Und Pflanzen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Security
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Security
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Security/Security%20Notes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Security Notes
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Server
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Server
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Server/Services.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Services
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Windows
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Windows
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows/Commands-Collection.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Commands Collection
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../index.html" class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    Start
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="./Backup-to-AWS-S3-Deep-Archive.html" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    Linux
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <h1 id="__skip">Commands Collection</h1>
+
+<p>Collection of helpful Linux commands.</p>
+<h2 id="list-file-with-leading-line-numbers">List File With Leading Line Numbers</h2>
+<div class="highlight"><pre><span></span><code>nl<span class="w"> </span>-w2<span class="w"> </span>-s<span class="s2">&quot;| &quot;</span><span class="w"> </span>testfile.txt
+<span class="w"> </span><span class="m">1</span><span class="p">|</span><span class="w"> </span>This<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span><span class="nb">test</span><span class="w"> </span>file
+<span class="w"> </span><span class="m">2</span><span class="p">|</span><span class="w"> </span>with<span class="w"> </span>line<span class="w"> </span><span class="k">break</span>.
+</code></pre></div>
+<h2 id="list-group-of-files">List group of files</h2>
+<div class="highlight"><pre><span></span><code>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F.<span class="w"> </span><span class="s1">&#39;{print $NF}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n
+</code></pre></div>
+<h2 id="generate-and-read-qr-codes">Generate and Read QR Codes</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generate</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some data&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>qrencode<span class="w"> </span>-l<span class="w"> </span>Q<span class="w"> </span>-t<span class="w"> </span>SVG<span class="w"> </span>-o<span class="w"> </span>/tmp/qr.svg
+
+<span class="c1"># Read</span>
+zbarimg<span class="w"> </span>-q<span class="w"> </span>/tmp/qr.svg<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c<span class="w"> </span><span class="m">9</span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+</code></pre></div>
+<h2 id="generate-duplex-pdf-from-single-page-scan">Generate Duplex PDF from Single Page Scan</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Change order of even pages</span>
+/usr/bin/pdftk<span class="w"> </span>EvenPages.pdf<span class="w"> </span>cat<span class="w"> </span>end-1<span class="w"> </span>output<span class="w"> </span>BackWardsEvenPages.pdf
+
+<span class="c1"># Merge even and odd pages</span>
+/usr/bin/pdftk<span class="w"> </span><span class="nv">ODD</span><span class="o">=</span>OddPages.pdf<span class="w"> </span><span class="nv">EVEN</span><span class="o">=</span>backWardsEvenPages.pdf<span class="w"> </span>shuffle<span class="w"> </span>ODD<span class="w"> </span>EVEN<span class="w"> </span>output<span class="w"> </span>FinalDocument.pdf
+
+<span class="c1"># Remove last blank page, if necessary</span>
+/usr/bin/pdftk<span class="w"> </span>FinalDocument.pdf<span class="w"> </span>cat<span class="w"> </span><span class="m">1</span>-r2<span class="w"> </span>output<span class="w"> </span>FinalDocumentWithoutLast.pdf
+</code></pre></div>
+<h2 id="media-files">Media Files</h2>
+<h3 id="download-videos">Download Videos</h3>
+<p>Provide a selection of possible variations of audio and video format.
+<div class="highlight"><pre><span></span><code>yt-dlp<span class="w"> </span>-f-<span class="w"> </span>&lt;URL&gt;
+</code></pre></div>
+Download with multiple audio tracks
+<div class="highlight"><pre><span></span><code>yt-dlp<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;AUDIO_ID_1+AUDIO_ID_2+AUDIO_ID_3+VIDEO_ID&quot;</span><span class="w"> </span>--audio-multistreams<span class="w"> </span>&lt;URL&gt;<span class="w"> </span>
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--user<span class="o">=</span><span class="s2">&quot;1000:1000&quot;</span><span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--volume<span class="o">=</span>.:/downloads:rw<span class="w"> </span>jauderho/yt-dlp:latest<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;bv*+ba/best&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h2 id="rename-mass-files">Rename mass files</h2>
+<h3 id="rename-media-files-to-create-date">Rename Media Files to Create Date</h3>
+<div class="highlight"><pre><span></span><code>exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;CreateDate&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
+exiftool<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;%Y-%m-%d_%H%M%S.%%e&#39;</span><span class="w"> </span><span class="s1">&#39;-filename&lt;DateTimeOriginal&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="m">1</span><span class="w"> </span>*
+</code></pre></div>
+<h3 id="rename-file-based-on-modified-date">Rename File based on Modified Date</h3>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.jpg
+<span class="k">do</span>
+<span class="w">    </span>mv<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>date<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span>+<span class="s2">&quot;%Y-%m-%d_%H%M%S&quot;</span><span class="k">)</span><span class="s2">.jpg&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<h3 id="copy-metadata-media">Copy Metadata Media</h3>
+<div class="highlight"><pre><span></span><code>exiftool<span class="w"> </span>-TagsFromFile<span class="w"> </span>source.mp4<span class="w"> </span>-all:all<span class="w"> </span>-overwrite_original<span class="w"> </span>destination.mp4
+</code></pre></div>
+<h3 id="geotag-pictures">Geotag Pictures</h3>
+<p><div class="highlight"><pre><span></span><code>exiftool<span class="w"> </span>-geotag<span class="o">=</span>geolocation.gpx<span class="w"> </span>-geosync<span class="o">=</span>-1<span class="w"> </span>./photos/
+</code></pre></div>
+<code>-geosync</code> defines offset in hours</p>
+<h2 id="create-empty-file">Create Empty File</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># create file with size but does not allocate space on disc</span>
+truncate<span class="w"> </span>-s<span class="w"> </span>1G<span class="w"> </span>foo.file
+
+<span class="c1"># create file with size also llocate space on disc</span>
+fallocate<span class="w"> </span>-l<span class="w"> </span>1G<span class="w"> </span>foo.file
+</code></pre></div>
+<h2 id="remove-drm-from-pdf">Remove DRM from PDF</h2>
+<h3 id="manual-process">Manual Process</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Login to Adobe DRM</span>
+adept_activate<span class="w"> </span>--username<span class="w"> </span>ADOBE_LOGIN_USERNAME<span class="w"> </span>--password<span class="w"> </span>ADOBE_LOGIN_PASSWORD
+
+<span class="c1"># Download PDF from ASCM File</span>
+acsmdownloader<span class="w"> </span>--acsm-file<span class="w"> </span>downloadfile.ascm<span class="w"> </span>--output-file<span class="w"> </span>outputfile
+
+<span class="c1"># Remove DRM</span>
+adept_remove<span class="w"> </span>TMPOUT
+</code></pre></div>
+<h3 id="drm-pdf-setup-with-docker">DRM PDF Setup with Docker</h3>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Create Adobe Credentials Files</span>
+docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/adept/:/home/libgourou/.adept<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--entrypoint<span class="w"> </span>adept_activate<span class="w"> </span>-u<span class="w"> </span>&lt;USERNAME&gt;<span class="w"> </span>--output-dir<span class="w"> </span>/home/libgourou/.adept<span class="w">  </span><span class="se">\</span>
+<span class="w">    </span>bcliang/docker-libgourou
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Remove DRM</span>
+docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/adept/:/home/libgourou/.adept<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/home/libgourou/files<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--rm<span class="w"> </span>bcliang/docker-libgourou<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>book.acsm
+</code></pre></div></p>
+<h2 id="rename-file-in-folder-to-lowercase">Rename File in Folder to Lowercase</h2>
+<div class="highlight"><pre><span></span><code>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-exec<span class="w"> </span>perl-rename<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;y/A-Z/a-z/&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+</code></pre></div>
+<h2 id="convert">Convert</h2>
+<h3 id="convert-avi-to-mp4">Convert AVI to mp4</h3>
+<div class="highlight"><pre><span></span><code>ffmpeg<span class="w"> </span>-i<span class="w"> </span>input.avi<span class="w"> </span>-c:v<span class="w"> </span>libx264<span class="w"> </span>-b:v<span class="w"> </span>800k<span class="w"> </span>-c:a<span class="w"> </span>mp3<span class="w"> </span>output.mp4
+</code></pre></div>
+<h3 id="convert-markdown-to-pdf">Convert Markdown to PDF</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set alias</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">pandocker</span><span class="o">=</span><span class="s2">&quot;docker run --rm --volume &quot;</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/data<span class="s2">&quot; --user `id -u`:`id -g` pandoc/latex:2.6&quot;</span>
+
+<span class="c1">#Use the command</span>
+pandocker<span class="w"> </span><span class="k">in</span>.md<span class="w"> </span>-o<span class="w"> </span>out.pdf
+</code></pre></div>
+<h2 id="clear-log-journal">Clear log journal</h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>journalctl<span class="w"> </span>--rotate<span class="w"> </span>--vacuum-time<span class="o">=</span>1s
+</code></pre></div>
+<h2 id="zfs">ZFS</h2>
+<h3 id="destroy-all-snapshots-from-dataset">Destroy all Snapshots from Dataset</h3>
+<div class="highlight"><pre><span></span><code>zfs<span class="w"> </span>list<span class="w"> </span>-H<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span>-t<span class="w"> </span>snapshot<span class="w"> </span>&lt;POOL/DATASET&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span>sudo<span class="w"> </span>zfs<span class="w"> </span>destroy<span class="w"> </span>-v<span class="w"> </span>-n
+</code></pre></div>
+<h2 id="remote-rdp-connection-gnome-shell">Remote RDP connection Gnome Shell</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable RDP</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">true</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.vnc<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">true</span>
+
+<span class="c1"># Get Fingerprint of Encryption Certificate</span>
+openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w">  </span>~/.local/share/gnome-remote-desktop/certificates/rdp-tls.crt<span class="w"> </span>-noout<span class="w"> </span>-text<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
+
+<span class="c1"># Disable RDP</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">false</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span>view-only<span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+<h2 id="remote-rdp-connection-gnome-shell_1">Remote RDP connection Gnome Shell</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable VNC</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.vnc<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">true</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.vnc<span class="w"> </span>view-only<span class="w"> </span><span class="nb">false</span>
+grdctl<span class="w"> </span>vnc<span class="w"> </span>set-password
+
+<span class="c1"># Disable VNC</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="nb">false</span>
+gsettings<span class="w"> </span><span class="nb">set</span><span class="w"> </span>org.gnome.desktop.remote-desktop.rdp<span class="w"> </span>view-only<span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+<h2 id="sip">SIP</h2>
+<h3 id="telekom">Telekom</h3>
+<p>Baresip Configuration
+<div class="highlight"><pre><span></span><code>&lt;sip:+49yournumber@tel.t-online.de&gt;;auth_user=anonymous@t-online.de;auth_pass=1234;outbound=&quot;sip:tel.t-online.de;transport=tcp&quot;
+</code></pre></div>
+Android Configuration</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIP URI</td>
+<td>sip:+49yournumber@tel.t-online.de</td>
+</tr>
+<tr>
+<td>Nickname</td>
+<td>+49yournumbe</td>
+</tr>
+<tr>
+<td>Display Name</td>
+<td>+49yournumbe</td>
+</tr>
+<tr>
+<td>Authentication Username</td>
+<td>anonymous@t-online.de</td>
+</tr>
+<tr>
+<td>Authentication Password</td>
+<td>random</td>
+</tr>
+<tr>
+<td>SIP URI of Proxy Server</td>
+<td>sip:tel.t-online.de;transport=tcp</td>
+</tr>
+<tr>
+<td>Telephony Provider</td>
+<td>sip:tel.t-online.de;transport=tcp</td>
+</tr>
+<tr>
+<td>Register</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Check Origin</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">acsm</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">avi</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">bash</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">drm</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">duplex</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">exif</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">ffmpeg</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">jpg</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">lang-en</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">linux</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">markdown</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">mp4</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">pdf</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">qr</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">qrcode</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">rename</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">scanner</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">video</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">yt-dlp</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">rdp</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">remote</span>
+      
+    
+  </nav>
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["search.highlight","navigation.tracking","navigation.path","toc.follow","toc.integrate","content.code.copy","content.code.select","content.code.annotate"],"search":"../assets/javascripts/workers/search.b6b7e04f.min.js","tags":null,"translations":{"clipboard.copied":"In Zwischenablage kopiert","clipboard.copy":"In Zwischenablage kopieren","search.result.more.one":"1 weiteres Suchergebnis auf dieser Seite","search.result.more.other":"# weitere Suchergebnisse auf dieser Seite","search.result.none":"Keine Suchergebnisse","search.result.one":"1 Suchergebnis","search.result.other":"# Suchergebnisse","search.result.placeholder":"Suchbegriff eingeben","search.result.term.missing":"Es fehlt","select.version":"Version auswählen"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.ee611ef6.min.js"></script>
+      
+    
+  </body>
+</html>
